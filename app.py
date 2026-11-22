@@ -51,6 +51,14 @@ div[data-baseweb="input"] input {font-size: 1rem; padding: 0.6rem 0.8rem;}
 .tag {display:inline-block; padding:2px 10px; border-radius:999px; font-size:.78rem; font-weight:600;
       background:rgba(245,158,11,.2); border:1px solid rgba(245,158,11,.6);}
 .tag.live {background:rgba(34,197,94,.18); border-color:rgba(34,197,94,.6);}
+.kpi-grid {display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:14px 0 20px 0;}
+.kpi-card {background:rgba(128,128,128,.07); border:1px solid rgba(128,128,128,.25); border-radius:14px;
+           padding:14px 16px; display:flex; flex-direction:column; justify-content:space-between;}
+.kpi-header {display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;}
+.kpi-title {font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.6px; opacity:.72;}
+.kpi-icon {font-size:1.1rem;}
+.kpi-value {font-size:1.4rem; font-weight:700; color:#4f46e5; line-height:1.2;}
+@media (max-width: 768px) {.kpi-grid {grid-template-columns:repeat(2,1fr);}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -153,11 +161,17 @@ def render(state):
         f'<div class="step {"warn" if w else ""}"><b>{n}</b>{esc(t)}</div>' for n, t, w in steps) + "</div>",
         unsafe_allow_html=True)
 
-    c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Data source", b.data_source.title())
-    c2.metric("Competitors", len(b.competitors))
-    c3.metric("Revisions used", f"{state.revisions_used} of 1")
-    c4.metric("Sources", len(b.sources))
+    kpis = [
+        ("Data source", b.data_source.title(), "📊"),
+        ("Competitors", str(len(b.competitors)), "🏢"),
+        ("Revisions used", f"{state.revisions_used} of 1", "🔄"),
+        ("Sources", str(len(b.sources)), "📚"),
+    ]
+    st.markdown('<div class="kpi-grid">' + "".join(
+        f'<div class="kpi-card">'
+        f'<div class="kpi-header"><span class="kpi-title">{esc(label)}</span><span class="kpi-icon">{icon}</span></div>'
+        f'<div class="kpi-value">{esc(val)}</div>'
+        f'</div>' for label, val, icon in kpis) + '</div>', unsafe_allow_html=True)
 
     if f.data_source == "NO DATA FOUND":
         st.error(b.summary)
