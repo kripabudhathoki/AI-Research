@@ -30,6 +30,13 @@ def test_fuzzy_and_aliases():
         assert s.findings.matched_name == name, (q, s.findings.matched_name)
 
 
+def test_keyword_search():
+    for q, name in [("coffee", "Himalayan Java"), ("noodles", "Chaudhary Group"), ("wallet", "Digital payments in Nepal")]:
+        s = wf.run_workflow(q, "sample")
+        assert s.findings.matched_name == name, (q, s.findings.matched_name)
+    assert wf.run_workflow("Tesla", "sample").findings.data_source == wf.NONE_LABEL
+
+
 def test_every_directory_entry_is_findable():
     for e in wf.load_directory():
         s = wf.run_workflow(e["name"], "sample")

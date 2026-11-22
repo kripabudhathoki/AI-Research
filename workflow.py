@@ -127,6 +127,20 @@ def _entry_score(q: str, entry: dict) -> float:
     return max(_score(q, _norm(k)) for k in keys)
 
 
+def _keyword_match(topic: str):
+    """Fallback: match words such as 'coffee', 'wallet' or 'hydro' against names, aliases and summaries."""
+    toks = [t for t in _norm(topic).split() if len(t) >= 4 and t not in ("nepal", "nepali")]
+    if not toks:
+        return None
+    best, best_hits = None, 0
+    for entry in load_directory():
+        hay = (entry["name"] + " " + " ".join(entry.get("aliases", [])) + " " + entry["summary"]).lower()
+        hits = sum(1 for t in toks if t in hay)
+        if hits > best_hits:
+            best, best_hits = entry, hits
+    return best if best_hits >= (len(toks) + 1) // 2 else None
+
+
 def find_in_directory(topic: str, threshold: float = 0.78):
     q = _norm(topic)
     if not q or q == "nepal":
@@ -136,7 +150,10 @@ def find_in_directory(topic: str, threshold: float = 0.78):
         s = _entry_score(q, entry)
         if s > best_score:
             best, best_score = entry, s
-    return (best, best_score) if best_score >= threshold else (None, best_score)
+    if best_score >= threshold:
+        return best, best_score
+    kw = _keyword_match(topic)
+    return (kw, 0.5) if kw else (None, best_score)
 
 
 def suggestions(topic: str, n: int = 4) -> List[str]:
@@ -147,7 +164,16 @@ def suggestions(topic: str, n: int = 4) -> List[str]:
 
 # ----------------------------------------------------------------- live search
 def _http_json(url: str, timeout: int = 12) -> dict:
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
+    headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    try:
+        import requests  # installed with Streamlit; uses certifi, avoids SSL errors on macOS/Windows
+    except ImportError:
+        requests = None
+    if requests is not None:
+        resp = requests.get(url, headers=headers, timeout=timeout)
+        resp.raise_for_status()
+        return resp.json()
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return json.loads(resp.read().decode("utf-8", errors="replace"))
 
