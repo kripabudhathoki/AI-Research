@@ -10,12 +10,20 @@
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1218;--sf:#171B23;--tx:#EEF0F4;--mt:#A8B0BD;--bd:#2B323E;--ac:#B5C9FF;--acs:#1E2A4A;--pb:#7FA2FF;--pt:#0F1218;--okb:#13351F;--okt:#9BE0B4;--bab:#3F1A1A;--bat:#FFB4B4;--inb:#1E2A4A;--int:#B5C9FF;--nb:#262C37;--nt:#C4CAD4;color-scheme:dark}}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}*,*::before{box-sizing:border-box}
 body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
-.sh{display:flex;min-height:720px;background:linear-gradient(180deg,var(--acs),var(--bg) 320px)}.sb{width:230px;flex:none;background:var(--sf);border-right:1px solid var(--bd);padding:20px 12px;display:flex;flex-direction:column;gap:4px}
-.br{padding:0 12px 16px;font-size:16px;display:flex;align-items:center;gap:8px}.br::before{content:"";width:14px;height:14px;border-radius:5px;background:linear-gradient(135deg,var(--pb),#7FA2FF)}
-.sb button{all:unset;box-sizing:border-box;padding:12px;border-radius:8px;font-size:14px;cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--tx)}
-.sb button[aria-current=page]{background:var(--acs);color:var(--ac);font-weight:600}.sb button:hover{background:var(--acs)}
-.note{margin-top:auto;padding:12px;font-size:12px;color:var(--mt)}
-.mn{flex:1;min-width:0;padding:40px 24px;max-width:880px;margin:0 auto;width:100%}
+.sh{display:flex;flex-direction:column;min-height:100vh;width:100%;background:linear-gradient(180deg,var(--acs),var(--bg) 360px)}
+.top-nav{width:100%;background:var(--sf);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(20,24,31,.04)}
+.nav-inner{max-width:1240px;width:100%;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
+.br{font-size:18px;display:flex;align-items:center;gap:10px;padding:0}
+.br::before{content:"";width:14px;height:14px;border-radius:5px;background:linear-gradient(135deg,var(--pb),#7FA2FF)}
+.nav-pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--acs);color:var(--ac);letter-spacing:0.04em;text-transform:uppercase}
+.sb{display:flex;flex-direction:row;align-items:center;gap:6px;padding:0;background:transparent;border:none;width:auto}
+.sb button{all:unset;box-sizing:border-box;padding:8px 16px;border-radius:8px;font-size:14px;cursor:pointer;min-height:38px;display:flex;align-items:center;color:var(--tx);font-weight:500;transition:all .2s ease}
+.sb button[aria-current=page]{background:var(--acs);color:var(--ac);font-weight:600}
+.sb button:hover{background:var(--acs);color:var(--ac)}
+.note{font-size:12px;color:var(--mt)}
+.mn{flex:1;min-width:0;padding:36px 24px 60px;max-width:1240px;margin:0 auto;width:100%;box-sizing:border-box}
+.ft{margin-top:auto;border-top:1px solid var(--bd);background:var(--sf);padding:16px 24px;font-size:13px}
+.ft-inner{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 h1{font-size:32px;letter-spacing:-.02em;margin:0 0 8px;outline:0}h2{font-size:18px;margin:28px 0 10px}p{margin:0 0 8px}.mt{color:var(--mt);font-size:14px}
 .cd{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;margin:12px 0;box-shadow:0 1px 2px rgba(20,24,31,.06),0 6px 20px rgba(20,24,31,.05)}
 ul.cd,ol.cd{padding-left:40px}ul.cd.sl,ol.cd.sl{list-style:none;padding:8px 20px}.em{border-style:dashed}
@@ -54,7 +62,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
 /* Print & PDF Export Styling */
 @media print {
   body { background: #fff !important; color: #111 !important; font-size: 11pt !important; }
-  .sb, .tabs, .presets, button, .note, [data-act], nav, #live, .bar { display: none !important; }
+  .top-nav, .sb, .tabs, .presets, button, .note, [data-act], nav, #live, .bar, .ft { display: none !important; }
   .sh { display: block !important; }
   .mn { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
   .cd { background: #fff !important; border: 1px solid #ccc !important; box-shadow: none !important; margin: 8pt 0 !important; padding: 12pt !important; page-break-inside: avoid; }
@@ -64,14 +72,24 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
   .tg { border: 1px solid #ccc !important; }
 }
 
-@media(max-width:760px){.sh{flex-direction:column}.sb{width:auto;flex-direction:row;overflow-x:auto;padding:8px}.br{display:none}.note{display:none}.mn{padding:20px}.g2{grid-template-columns:1fr}h1{font-size:26px}.pipe,.kpi{grid-template-columns:1fr}.hero{padding:20px}}
+@media(max-width:760px){.nav-inner{flex-direction:column;gap:8px;padding:10px 16px;align-items:flex-start}.sb{width:100%;overflow-x:auto;padding-bottom:4px}.mn{padding:20px 16px}.g2{grid-template-columns:1fr}h1{font-size:26px}.pipe,.kpi{grid-template-columns:1fr}.hero{padding:24px 16px}.ft-inner{flex-direction:column;text-align:center}}
 @media(prefers-reduced-motion:no-preference){.tg.run{animation:p 1.4s ease-in-out infinite}@keyframes p{50%{opacity:.6}}@keyframes in{from{opacity:0;transform:translateY(8px)}}@keyframes pop{from{opacity:0;transform:scale(.85)}}.enter>*{animation:in .35s ease both}.enter>*:nth-child(2){animation-delay:.05s}.enter>*:nth-child(3){animation-delay:.1s}.enter>*:nth-child(n+4){animation-delay:.15s}[role=tabpanel]{animation:in .3s ease both}.lg li:last-child{animation:in .3s ease}.sl .tg{animation:pop .3s ease both}.pipe li{transition:border-color .3s,box-shadow .3s,transform .3s}.pipe li::before{transition:background .3s,color .3s}.pipe li.act{transform:translateY(-2px)}.bar i{transition:width .5s ease}.bt{transition:filter .2s,transform .2s}.bt:hover{transform:translateY(-1px)}.cd{transition:box-shadow .2s}}
 </style>
 </head>
 <body>
 <div class="sh">
-<nav class="sb" aria-label="Main"><span class="br"><b>Research Brief</b></span><button data-v="new">New research</button><button data-v="history">History</button><button data-v="help">How it works</button><p class="note">Multi-Agent Market Research System. Real-time scraping &amp; 4-role sequential workflow.</p></nav>
+<header class="top-nav" role="banner">
+  <div class="nav-inner">
+    <div class="br"><b>Research Brief</b><span class="nav-pill">Multi-Agent AI</span></div>
+    <nav class="sb" aria-label="Main">
+      <button data-v="new">New research</button>
+      <button data-v="history">History</button>
+      <button data-v="help">How it works</button>
+    </nav>
+  </div>
+</header>
 <main id="m" class="mn"></main>
+<footer class="ft"><div class="ft-inner"><span>Research Brief Multi-Agent System</span><span class="mt">4-Role Sequential Workflow: Orchestrator &bull; Researcher &bull; Analyst &bull; Critic</span></div></footer>
 </div>
 <div id="live" class="sr" aria-live="polite"></div>
 <script>
@@ -431,6 +449,7 @@ const logBox = r => `<ul class="cd lg" id="log" data-n="${r.log.length}" role="l
 
 function vNew() {
   return `<div class="hero"><h1 tabindex="-1">New research</h1><p class="mt">Enter a company or industry. Four agents research it and write a short brief.</p></div>
+<div style="max-width:980px;margin:0 auto;">
 <div class="presets">
   <span class="mt" style="align-self:center;font-weight:600;">Presets:</span>
   <button class="preset-btn" onclick="$('#q').value='Analyze the food delivery market in Nepal.';$('#q').focus();">Food delivery in Nepal</button>
@@ -439,18 +458,19 @@ function vNew() {
   <button class="preset-btn" onclick="$('#q').value='Electric two-wheelers in India';$('#q').focus();">Electric vehicles in India</button>
   <button class="preset-btn" onclick="$('#q').value='Mobile money in Kenya';$('#q').focus();">Mobile money in Kenya</button>
 </div>
-<form class="cd" id="f" novalidate><label class="lb" for="q">Company or industry</label><input class="in" id="q" autocomplete="off" aria-describedby="qh" value="${esc(S.q)}" placeholder="e.g., Tesla, Netflix, or Food delivery market in Nepal"><p class="mt" id="qh">Enter a target company name or industry topic to generate a multi-agent research brief.</p><p class="err" id="qe" hidden></p>
-<fieldset><legend class="lb">Data source</legend><label class="rd"><input type="radio" name="ds" value="web" ${S.sample ? '' : 'checked'}> Web search with scraping</label><label class="rd"><input type="radio" name="ds" value="sample" ${S.sample ? 'checked' : ''}> Sample data <span class="mt">(labelled as sample in the brief)</span></label></fieldset>
-<details><summary>Prototype controls</summary><label class="rd"><input type="checkbox" id="fail" ${S.fail ? 'checked' : ''}> Simulate a failed web search</label></details>
-<div style="display:flex;justify-content:center;margin-top:16px;"><button class="bt" type="submit" style="min-width:200px;padding:12px 28px;">Start research</button></div></form>
-<h2 style="text-align:center;">What happens next</h2><ol class="pipe">${ROLES.map(([k,n,d])=>`<li><b>${n}</b><span class="mt">${d}</span></li>`).join('')}</ol>
-<h2 style="text-align:center;">Recent briefs</h2>${S.hist.length ? `<ul class="cd sl">${S.hist.slice(0, 3).map((h, i) => `<li><b>${esc(h.q)}</b><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button><span class="mt">${esc(h.time)}</span></li>`).join('')}</ul>` : `<div class="cd em" style="text-align:center;"><p><b>No briefs yet</b></p><p class="mt">Finished briefs appear here so you can open them again.</p></div>`}`;
+<form class="cd" id="f" novalidate style="padding:28px 32px;"><label class="lb" for="q" style="font-size:15px;margin-bottom:8px;">Company or industry</label><input class="in" id="q" autocomplete="off" aria-describedby="qh" value="${esc(S.q)}" placeholder="e.g., Tesla, Netflix, or Food delivery market in Nepal" style="font-size:16px;padding:12px 16px;min-height:50px;"><p class="mt" id="qh" style="margin-top:8px;">Enter a target company name or industry topic to generate a multi-agent research brief.</p><p class="err" id="qe" hidden></p>
+<fieldset style="margin:20px 0 12px;"><legend class="lb">Data source</legend><div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:6px;"><label class="rd"><input type="radio" name="ds" value="web" ${S.sample ? '' : 'checked'}> Web search with scraping</label><label class="rd"><input type="radio" name="ds" value="sample" ${S.sample ? 'checked' : ''}> Sample data <span class="mt">(labelled as sample in the brief)</span></label></div></fieldset>
+<details style="margin:12px 0 16px;"><summary>Prototype controls</summary><label class="rd"><input type="checkbox" id="fail" ${S.fail ? 'checked' : ''}> Simulate a failed web search</label></details>
+<div style="display:flex;justify-content:center;margin-top:20px;"><button class="bt" type="submit" style="min-width:240px;font-size:16px;padding:12px 32px;">Start research</button></div></form>
+</div>
+<h2 style="text-align:center;margin-top:40px;">What happens next</h2><ol class="pipe">${ROLES.map(([k,n,d])=>`<li><b>${n}</b><span class="mt">${d}</span></li>`).join('')}</ol>
+<h2 style="text-align:center;margin-top:40px;">Recent briefs</h2>${S.hist.length ? `<ul class="cd sl" style="max-width:980px;margin:0 auto;">${S.hist.slice(0, 3).map((h, i) => `<li><b>${esc(h.q)}</b><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button><span class="mt">${esc(h.time)}</span></li>`).join('')}</ul>` : `<div class="cd em" style="text-align:center;max-width:980px;margin:12px auto;"><p><b>No briefs yet</b></p><p class="mt">Finished briefs appear here so you can open them again.</p></div>`}`;
 }
 
 function vRun() {
   const r = S.run;
-  if (r.err) return `<div style="text-align:center;"><h1 tabindex="-1">Research stopped at the Researcher</h1></div><div class="cd" role="alert" style="border-color:var(--bat)"><p><b>${esc(r.err)}</b></p><p class="mt">Your query “${esc(r.q)}” is kept. Try again, or run it on sample data, which the brief labels clearly.</p><div style="display:flex;gap:8px;margin-top:12px;"><button class="bt" data-act="retry">Try again</button><button class="b2" data-act="sample">Use sample data</button><button class="b2" data-act="edit">Edit query</button></div></div>${steps(r)}`;
-  return `<div style="text-align:center;margin-bottom:18px;"><h1 tabindex="-1">Researching “${esc(r.q)}”</h1><p class="mt" id="stat">Agents are working. The brief appears when the Critic is done.</p></div><div class="bar" aria-hidden="true"><i id="pb" style="width:${Object.values(r.st).reduce((a,v)=>a+(v==='done'?25:v==='run'?12:0),0)}%"></i></div>${steps(r)}<h2>Scraping log</h2>${logBox(r)}<div class="cd" aria-busy="true" aria-label="Brief loading"><div class="sk" style="width:40%"></div><div class="sk"></div><div class="sk" style="width:80%"></div></div><div style="text-align:center;margin-top:16px;"><button class="b2" data-act="cancel">Cancel research</button></div>`;
+  if (r.err) return `<div style="text-align:center;max-width:900px;margin:0 auto;"><h1 tabindex="-1">Research stopped at the Researcher</h1><div class="cd" role="alert" style="border-color:var(--bat)"><p><b>${esc(r.err)}</b></p><p class="mt">Your query “${esc(r.q)}” is kept. Try again, or run it on sample data, which the brief labels clearly.</p><div style="display:flex;gap:8px;justify-content:center;margin-top:16px;"><button class="bt" data-act="retry">Try again</button><button class="b2" data-act="sample">Use sample data</button><button class="b2" data-act="edit">Edit query</button></div></div>${steps(r)}</div>`;
+  return `<div style="max-width:1040px;margin:0 auto;"><div style="text-align:center;margin-bottom:20px;"><h1 tabindex="-1">Researching “${esc(r.q)}”</h1><p class="mt" id="stat">Agents are working. The brief appears when the Critic is done.</p></div><div class="bar" aria-hidden="true"><i id="pb" style="width:${Object.values(r.st).reduce((a,v)=>a+(v==='done'?25:v==='run'?12:0),0)}%"></i></div>${steps(r)}<h2 style="margin-top:32px;">Scraping log</h2>${logBox(r)}<div class="cd" aria-busy="true" aria-label="Brief loading"><div class="sk" style="width:40%"></div><div class="sk"></div><div class="sk" style="width:80%"></div></div><div style="text-align:center;margin-top:20px;"><button class="b2" data-act="cancel">Cancel research</button></div></div>`;
 }
 
 function upd() {
@@ -540,11 +560,11 @@ function vRes() {
 }
 
 function vHist() {
-  return `<div style="text-align:center;margin-bottom:20px;"><h1 tabindex="-1">History</h1><p class="mt">Open an earlier brief.</p></div>${S.hist.length ? `<div class="cd sc"><table><thead><tr><th>Topic</th><th>Data source</th><th>Date</th><th>Action</th></tr></thead><tbody>${S.hist.map((h, i) => `<tr><td>${esc(h.q)}</td><td>${h.sample ? 'Sample data' : 'Web search'}</td><td>${esc(h.time)}</td><td><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button></td></tr>`).join('')}</tbody></table></div>` : `<div class="cd em" style="text-align:center;"><p><b>No briefs yet</b></p><p class="mt">Run a research and its brief shows up here.</p><div style="margin-top:16px;"><button class="bt" data-act="new">Start research</button></div></div>`}`;
+  return `<div style="max-width:1040px;margin:0 auto;"><div style="text-align:center;margin-bottom:20px;"><h1 tabindex="-1">History</h1><p class="mt">Open an earlier brief.</p></div>${S.hist.length ? `<div class="cd sc"><table><thead><tr><th>Topic</th><th>Data source</th><th>Date</th><th>Action</th></tr></thead><tbody>${S.hist.map((h, i) => `<tr><td>${esc(h.q)}</td><td>${h.sample ? 'Sample data' : 'Web search'}</td><td>${esc(h.time)}</td><td><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button></td></tr>`).join('')}</tbody></table></div>` : `<div class="cd em" style="text-align:center;"><p><b>No briefs yet</b></p><p class="mt">Run a research and its brief shows up here.</p><div style="margin-top:16px;"><button class="bt" data-act="new">Start research</button></div></div>`}</div>`;
 }
 
 function vHelp() {
-  return `<div style="text-align:center;margin-bottom:24px;"><h1 tabindex="-1">How it works</h1><p class="mt">Four roles run in sequence and pass structured data to each other.</p></div><ol class="cd sl">${ROLES.map(([k, n, d], i) => `<li><b>${i + 1}. ${n}</b><span></span><span class="mt">${d}</span></li>`).join('')}</ol><h2 style="text-align:center;">Scraping</h2><div class="cd"><p class="mt">The Researcher searches the web, checks each site’s robots.txt, then reads only the pages it allows. Blocked or timed-out pages are listed under missing information.</p></div><h2 style="text-align:center;">Quality checks</h2><div class="cd"><p class="mt">Every brief is checked automatically: it has a summary, lists at most two competitors, used at most one revision, and shows a status for every source.</p></div><div style="text-align:center;margin-top:24px;"><button class="bt" data-act="new">Start research</button></div>`;
+  return `<div style="max-width:1040px;margin:0 auto;"><div style="text-align:center;margin-bottom:24px;"><h1 tabindex="-1">How it works</h1><p class="mt">Four roles run in sequence and pass structured data to each other.</p></div><ol class="cd sl">${ROLES.map(([k, n, d], i) => `<li><b>${i + 1}. ${n}</b><span></span><span class="mt">${d}</span></li>`).join('')}</ol><h2 style="margin-top:32px;">Scraping</h2><div class="cd"><p class="mt">The Researcher searches the web, checks each site’s robots.txt, then reads only the pages it allows. Blocked or timed-out pages are listed under missing information.</p></div><h2 style="margin-top:32px;">Quality checks</h2><div class="cd"><p class="mt">Every brief is checked automatically: it has a summary, lists at most two competitors, used at most one revision, and shows a status for every source.</p></div><div style="text-align:center;margin-top:28px;"><button class="bt" data-act="new">Start research</button></div></div>`;
 }
 
 const V = { new: vNew, run: vRun, result: vRes, history: vHist, help: vHelp };

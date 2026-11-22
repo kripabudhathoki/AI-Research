@@ -22,10 +22,15 @@ st.markdown("""
 footer { visibility: hidden !important; display: none !important; }
 header { visibility: hidden !important; display: none !important; }
 .stDeployButton { display: none !important; }
-.block-container {
+.main, .main .block-container, section.main, [data-testid="stAppViewBlockContainer"], [data-testid="stMainBlockContainer"], .block-container {
     padding: 0 !important;
     max-width: 100% !important;
+    width: 100% !important;
     margin: 0 !important;
+}
+[data-testid="stCustomComponentV1"], div[data-testid="stCustomComponentV1"] > iframe, .element-container {
+    width: 100% !important;
+    max-width: 100% !important;
 }
 iframe {
     width: 100% !important;
