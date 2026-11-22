@@ -1,199 +1,61 @@
-"""Export research brief to PDF format.
+"""Create a PDF copy of the research brief (needs fpdf2)."""
+from fpdf import FPDF
 
-Uses ReportLab when installed for styled typography; falls back to a clean
-built-in pure-Python PDF generator if ReportLab is not available.
-"""
-
-import io
-from typing import Any, List
+from workflow import RunState
 
 
-def _pure_python_pdf(title: str, subtitle: str, sections: List[tuple]) -> bytes:
-    """Generate a standard PDF 1.4 document using pure Python without external dependencies."""
-    lines: List[str] = [
-        f"RESEARCH BRIEF: {title.upper()}",
-        f"Data Source: {subtitle}",
-        "--------------------------------------------------------------------------------",
-        "",
-    ]
-
-    for sec_title, items in sections:
-        lines.append(f"[{sec_title.upper()}]")
-        if isinstance(items, str):
-            # Wrap simple paragraphs
-            words = items.split()
-            cur = ""
-            for w in words:
-                if len(cur) + len(w) + 1 > 75:
-                    lines.append(cur)
-                    cur = w
-                else:
-                    cur = f"{cur} {w}".strip()
-            if cur:
-                lines.append(cur)
-        elif isinstance(items, list):
-            for it in items:
-                # Wrap list items
-                words = str(it).split()
-                cur = "  * "
-                for w in words:
-                    if len(cur) + len(w) + 1 > 75:
-                        lines.append(cur)
-                        cur = "    " + w
-                    else:
-                        cur = f"{cur} {w}".strip() if cur == "  * " else f"{cur} {w}"
-                if cur:
-                    lines.append(cur)
-        lines.append("")
-
-    # Build PDF page text stream
-    stream_content = "BT /F1 10 Tf 45 745 Td 13 TL\n"
-    for line in lines[:55]:  # Fits on standard single page
-        clean = (
-            line.replace("\\", "\\\\")
-            .replace("(", "\\(")
-            .replace(")", "\\)")
-            .encode("latin1", "replace")
-            .decode("latin1")
-        )
-        stream_content += f"({clean}) ' \n"
-    stream_content += "ET"
-    stream_bytes = stream_content.encode("latin1")
-
-    obj1 = b"1 0 obj\n<</Type /Catalog /Pages 2 0 R>>\nendobj\n"
-    obj2 = b"2 0 obj\n<</Type /Pages /Kids [3 0 R] /Count 1>>\nendobj\n"
-    obj3 = b"3 0 obj\n<</Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources <</Font <</F1 4 0 R>>>> /Contents 5 0 R>>\nendobj\n"
-    obj4 = b"4 0 obj\n<</Type /Font /Subtype /Type1 /BaseFont /Helvetica>>\nendobj\n"
-    obj5 = (
-        f"5 0 obj\n<</Length {len(stream_bytes)}>>\nstream\n".encode("latin1")
-        + stream_bytes
-        + b"\nendstream\nendobj\n"
-    )
-
-    header = b"%PDF-1.4\n"
-    offsets = [0]
-    body = b""
-    for obj in [obj1, obj2, obj3, obj4, obj5]:
-        offsets.append(len(header) + len(body))
-        body += obj
-
-    xref_pos = len(header) + len(body)
-    xref = f"xref\n0 {len(offsets)}\n0000000000 65535 f \n".encode("latin1")
-    for o in offsets[1:]:
-        xref += f"{o:010d} 00000 n \n".encode("latin1")
-    trailer = f"trailer\n<</Size {len(offsets)} /Root 1 0 R>>\nstartxref\n{xref_pos}\n%%EOF\n".encode("latin1")
-    return header + body + xref + trailer
+def _t(text: str) -> str:
+    return str(text).encode("latin-1", "replace").decode("latin-1")
 
 
-def brief_to_pdf(state: Any) -> bytes:
-    """Convert a research brief RunState object into PDF bytes."""
-    topic = getattr(state.plan, "topic", "Market Research")
-    label = getattr(state.findings, "label", "Research Findings")
-    final = state.final
+def make_pdf(state: RunState) -> bytes:
+    b = state.final_brief
+    pdf = FPDF()
+    pdf.set_margins(15, 15, 15)
+    pdf.set_auto_page_break(True, 15)
+    pdf.add_page()
+    pdf.set_fill_color(79, 70, 229)
+    pdf.rect(0, 0, 210, 34, "F")
+    pdf.set_xy(15, 8)
+    pdf.set_font("Helvetica", "B", 18)
+    pdf.set_text_color(255, 255, 255)
+    pdf.cell(0, 9, "Research Brief", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica", "", 11)
+    pdf.cell(0, 7, _t(b.topic), new_x="LMARGIN", new_y="NEXT")
+    pdf.set_xy(15, 40)
+    pdf.set_font("Helvetica", "I", 9)
+    pdf.set_text_color(90, 90, 90)
+    pdf.multi_cell(0, 5, _t(f"Data source: {b.data_source} | Date: {state.run_date} | "
+                            f"Revisions used: {state.revisions_used} of 1"),
+                   new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(3)
 
-    summary_text = getattr(final, "summary", "")
-    competitors = getattr(final, "competitors", [])
-    observations = getattr(final, "key_observations", [])
-    sources_missing = getattr(final, "sources_and_missing", [])
+    def heading(text):
+        pdf.set_font("Helvetica", "B", 13)
+        pdf.set_text_color(79, 70, 229)
+        pdf.cell(0, 8, _t(text), new_x="LMARGIN", new_y="NEXT")
 
-    comp_lines = [f"{c.name}: {c.description}" for c in competitors] if competitors else ["No competitors identified."]
+    def para(text, bullet=False):
+        pdf.set_font("Helvetica", "", 10.5)
+        pdf.set_text_color(30, 30, 30)
+        pdf.multi_cell(0, 5.5, _t(("- " if bullet else "") + text), new_x="LMARGIN", new_y="NEXT")
 
-    sections = [
-        ("Summary", summary_text),
-        ("Competitors (up to 2)", comp_lines),
-        ("Key Observations", observations),
-        ("Sources & Missing Information", sources_missing),
-    ]
-
-    # Try ReportLab first if installed
-    try:
-        from reportlab.lib import colors
-        from reportlab.lib.pagesizes import letter
-        from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-        from reportlab.platypus import HRFlowable, Paragraph, SimpleDocTemplate, Spacer
-
-        buf = io.BytesIO()
-        doc = SimpleDocTemplate(
-            buf,
-            pagesize=letter,
-            rightMargin=45,
-            leftMargin=45,
-            topMargin=45,
-            bottomMargin=45,
-        )
-
-        styles = getSampleStyleSheet()
-        title_style = ParagraphStyle(
-            "DocTitle",
-            parent=styles["Heading1"],
-            fontSize=18,
-            leading=22,
-            textColor=colors.HexColor("#312e81"),
-            spaceAfter=4,
-        )
-        sub_style = ParagraphStyle(
-            "DocSub",
-            parent=styles["Normal"],
-            fontSize=9,
-            leading=12,
-            textColor=colors.HexColor("#4b5563"),
-            spaceAfter=10,
-        )
-        h2_style = ParagraphStyle(
-            "SectionH2",
-            parent=styles["Heading2"],
-            fontSize=12,
-            leading=15,
-            textColor=colors.HexColor("#4338ca"),
-            spaceBefore=10,
-            spaceAfter=4,
-        )
-        body_style = ParagraphStyle(
-            "Body",
-            parent=styles["Normal"],
-            fontSize=9.5,
-            leading=13.5,
-            textColor=colors.HexColor("#1f2937"),
-            spaceAfter=5,
-        )
-        bullet_style = ParagraphStyle(
-            "Bullet",
-            parent=body_style,
-            leftIndent=12,
-            firstLineIndent=-8,
-            spaceAfter=3,
-        )
-
-        elements = [
-            Paragraph(f"Research Brief: {topic}", title_style),
-            Paragraph(f"Data source: {label}", sub_style),
-            HRFlowable(width="100%", thickness=1, color=colors.HexColor("#e5e7eb"), spaceAfter=8),
-        ]
-
-        # Summary
-        elements.append(Paragraph("Summary", h2_style))
-        elements.append(Paragraph(summary_text, body_style))
-        elements.append(Spacer(1, 4))
-
-        # Competitors
-        elements.append(Paragraph("Competitors (up to 2)", h2_style))
-        for c in comp_lines:
-            elements.append(Paragraph(f"• {c}", bullet_style))
-        elements.append(Spacer(1, 4))
-
-        # Observations
-        elements.append(Paragraph("Key Observations", h2_style))
-        for o in observations:
-            elements.append(Paragraph(f"• {o}", bullet_style))
-        elements.append(Spacer(1, 4))
-
-        # Sources & Missing
-        elements.append(Paragraph("Sources & Missing Information", h2_style))
-        for sm in sources_missing:
-            elements.append(Paragraph(f"• {sm}", bullet_style))
-
-        doc.build(elements)
-        return buf.getvalue()
-    except Exception:
-        # Fall back gracefully to pure Python PDF generator
-        return _pure_python_pdf(topic, label, sections)
+    heading("Summary")
+    para(b.summary)
+    pdf.ln(2)
+    heading("Competitors (up to 2)")
+    for c in b.competitors or ["None identified"]:
+        para(c, bullet=True)
+    pdf.ln(2)
+    heading("Key observations")
+    for i, o in enumerate(b.observations or ["None available"], 1):
+        para(f"{i}. {o}")
+    pdf.ln(2)
+    heading("Sources and missing information")
+    para("Sources:")
+    for s in b.sources or ["None"]:
+        para(s, bullet=True)
+    para("Missing information:")
+    for m in b.missing:
+        para(m, bullet=True)
+    return bytes(pdf.output())

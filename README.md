@@ -1,64 +1,47 @@
-# Multi-Agent Market Research Brief
+# Nepal Market Research Agent
 
-A Streamlit app that accepts a company or industry query and generates a short
-research brief through a four-role sequential agent workflow. All agent handoffs
-use typed Pydantic models.
+A Streamlit app that takes a company or industry (for example "Foodmandu" or "Analyze the food delivery
+market in Nepal") and produces a short research brief using four roles that run in sequence.
 
 ## The four roles
+| Role | Job |
+|---|---|
+| Orchestrator | Receives the query, cleans the topic, creates the plan |
+| Researcher | Looks the topic up in the sample directory and/or live web search |
+| Analyst | Writes the brief from the findings |
+| Critic | Reviews the brief and requests at most one revision |
 
-| Role | What it does |
-|------|-------------|
-| Orchestrator | Cleans the query into a search topic and sets the plan |
-| Researcher | Returns clearly-labelled sample data or live Wikipedia search results |
-| Analyst | Writes the first brief draft from findings; revises once if Critic requests |
-| Critic | Checks completeness; requests at most one revision if issues are found |
+Data is passed between roles as Pydantic models (`workflow.py`): `OrchestratorPlan`, `ResearchFindings`,
+`BriefDraft`, `CriticFeedback`, `RunState`. The app shows them in the "Data passed between roles" tab.
 
-## Shared Pydantic models (passed between roles)
+## The brief
+Summary, up to two competitors, key observations, and sources with missing information.
+Download it as PDF or Markdown. Recent searches are kept in the sidebar (saved locally in `history.json`,
+not committed).
 
-- `OrchestratorPlan` — query, cleaned topic, use_sample flag, ordered steps
-- `ResearchFindings` — data-source label, facts, competitors, sources, gaps
-- `BriefDraft` — summary, up to 2 competitors, key observations, sources and missing info
-- `CriticFeedback` — approved flag, list of issues, optional revision request
-- `RunState` — all of the above plus revisions_used (0 or 1)
+## Data sources (always labelled)
+- **Sample directory**: `data/nepal_companies.json` has about 40 Nepali companies and sectors written from
+  general knowledge. It is labelled SAMPLE DATA and must be verified. Edit the file to add companies.
+- **Live web search**: Wikipedia, with DuckDuckGo as a fallback. No API key is needed. If the network is
+  blocked, the brief says so instead of showing an empty page.
+- **Modes**: Auto (directory first, then live), Sample only, Live only. If nothing is found, the app says so
+  and never invents data.
 
-## The four brief sections
-
-1. Summary of the topic
-2. Up to two competitors (if relevant)
-3. Key observations
-4. Sources and missing information
-
-## How to run
-
-```bash
-python3 -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+## Run locally
+```
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 streamlit run app.py
 ```
+Open http://localhost:8501. Copy `.env.example` to `.env` only if you add an API-based model later.
 
-Open **http://localhost:8501** in your browser.
-
-## Sample data vs live search
-
-Tick **"Use clearly labelled sample data"** (default) to run offline.
-The sample covers the Nepal food delivery example; for any other topic in sample mode
-the app falls back to a live Wikipedia search automatically. Untick to always use live search.
-Run `python make_sample_output.py` to regenerate `sample_output.md` from the workflow.
-
-## Search history
-
-Past searches are saved locally in `history.json` (not committed to git) and can be viewed or cleared anytime from the sidebar.
-
-## Tests
-
-```bash
+## Tests and sample output
+```
 python tests/test_workflow.py
+python make_sample_output.py     # regenerates sample_output.md from a real run
 ```
 
 ## Limitations
-
-- Analyst and Critic are rule-based, not LLM-powered.
-- Live search uses only the public Wikipedia API; it may return no results for
-  local or niche topics.
-- Market size, market share, and financial data are not fetched automatically.
+The Analyst and Critic are rule-based (no language model). Live search covers what Wikipedia and
+DuckDuckGo know, so small Nepali companies may not be found; add them to the sample directory.

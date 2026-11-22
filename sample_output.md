@@ -1,25 +1,26 @@
-# Sample Output
+# Research Brief: Food delivery in Nepal
 
-**Query:** Analyze the food delivery market in Nepal.
-**Data source:** SAMPLE DATA - illustrative only, not verified or live
-**Critic revisions used:** 0 of 1
-**Date generated:** 2026-11-23
+- Query: Analyze the food delivery market in Nepal.
+- Data source: SAMPLE DATA
+- Revisions used: 0 of 1
+- Date: 2026-11-23
 
 ## Summary
-
-Food delivery in Nepal is concentrated in Kathmandu Valley and a few other cities. Mobile wallets and QR payments are widely used for online orders.
+Food delivery in Nepal is served mainly by app-based platforms in Kathmandu Valley and a few other cities, with Foodmandu and Pathao Food among the best-known names.
 
 ## Competitors (up to 2)
-
-- **Foodmandu**: Early local food-delivery platform.
-- **Pathao Food**: Food delivery inside the Pathao app.
+- Foodmandu
+- Pathao Food
 
 ## Key observations
-
-- Unstructured street addressing makes last-mile delivery harder.
-- Platforms compete on delivery fees, discounts and restaurant coverage.
+1. Activity is concentrated in urban areas, especially Kathmandu Valley
+2. Platforms compete on restaurant selection, delivery time and promotions
+3. Digital wallets such as eSewa and Khalti are commonly used for online payment
 
 ## Sources and missing information
+**Sources**
+- Starter directory (data/nepal_companies.json) - sample data, not a live source
 
-- Source: Built-in sample dataset (sample)
-- Missing: No real market-size or market-share figures are included in the sample.
+**Missing information**
+- No live sources were consulted; facts are general knowledge and unverified.
+- No financial figures (revenue, profit, market share) are included.
