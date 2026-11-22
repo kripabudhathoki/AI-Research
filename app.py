@@ -88,8 +88,12 @@ def clear_history():
 for key, default in {"query": "", "result": None, "pending": False}.items():
     st.session_state.setdefault(key, default)
 
-# ------------------------------------------------------------------ search area
-hero_slot = st.container()
+# ------------------------------------------------------------------ header & search area
+st.markdown(
+    '<div class="hero"><h1>Nepal Market Research Agent</h1>'
+    "<p>Enter any company or industry. Four AI roles research, write, review and "
+    "deliver a short brief.</p></div>", unsafe_allow_html=True)
+
 c_in, c_btn = st.columns([5, 1.3])
 with c_in:
     st.text_input("Company or industry", key="query", label_visibility="collapsed",
@@ -116,11 +120,6 @@ if clicked or st.session_state.pending:
             st.error(f"Something went wrong: {exc}")
 
 result = st.session_state.result
-if result is None:
-    hero_slot.markdown(
-        '<div class="hero"><h1>Nepal Market Research Agent</h1>'
-        "<p>Enter any company or industry. Four AI roles research, write, review and "
-        "deliver a short brief.</p></div>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------------ sidebar history
 with st.sidebar:
