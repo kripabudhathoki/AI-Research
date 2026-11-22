@@ -48,8 +48,7 @@ Run `python make_sample_output.py` to regenerate `sample_output.md` from the wor
 
 ## Search history
 
-Each search is saved locally to `history.json` (not committed to git). Past queries are
-listed in the sidebar and can be cleared from there at any time.
+Past searches are saved locally in `history.json` (not committed to git) and can be viewed or cleared anytime from the sidebar.
 
 ## Tests
 

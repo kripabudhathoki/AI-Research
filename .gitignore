@@ -23,4 +23,7 @@ Thumbs.db
 # Secrets & environment variables
 .env
 .env.local
+
+# Local application data
 history.json
+
