@@ -10,8 +10,8 @@
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1218;--sf:#171B23;--tx:#EEF0F4;--mt:#A8B0BD;--bd:#2B323E;--ac:#B5C9FF;--acs:#1E2A4A;--pb:#7FA2FF;--pt:#0F1218;--okb:#13351F;--okt:#9BE0B4;--bab:#3F1A1A;--bat:#FFB4B4;--inb:#1E2A4A;--int:#B5C9FF;--nb:#262C37;--nt:#C4CAD4;color-scheme:dark}}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}*,*::before{box-sizing:border-box}
 body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
-.sh{display:flex;min-height:100vh}.sb{width:230px;flex:none;background:var(--sf);border-right:1px solid var(--bd);padding:20px 12px;display:flex;flex-direction:column;gap:4px}
-.br{padding:0 12px 16px;font-size:16px;display:flex;align-items:center;gap:8px}.br::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--pb)}
+.sh{display:flex;min-height:720px;background:linear-gradient(180deg,var(--acs),var(--bg) 320px)}.sb{width:230px;flex:none;background:var(--sf);border-right:1px solid var(--bd);padding:20px 12px;display:flex;flex-direction:column;gap:4px}
+.br{padding:0 12px 16px;font-size:16px;display:flex;align-items:center;gap:8px}.br::before{content:"";width:14px;height:14px;border-radius:5px;background:linear-gradient(135deg,var(--pb),#7FA2FF)}
 .sb button{all:unset;box-sizing:border-box;padding:12px;border-radius:8px;font-size:14px;cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--tx)}
 .sb button[aria-current=page]{background:var(--acs);color:var(--ac);font-weight:600}.sb button:hover{background:var(--acs)}
 .note{margin-top:auto;padding:12px;font-size:12px;color:var(--mt)}
@@ -43,11 +43,18 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
 .preset-btn{background:var(--sf);border:1px solid var(--bd);color:var(--tx);font-size:13px;padding:6px 12px;border-radius:6px;cursor:pointer}
 .preset-btn:hover{background:var(--acs);border-color:var(--ac);color:var(--ac)}
 .btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.hero{background:linear-gradient(135deg,var(--acs),var(--sf));border:1px solid var(--bd);border-radius:16px;padding:28px 32px;margin-bottom:8px}.hero h1{margin-bottom:6px}
+.pipe{list-style:none;margin:16px 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:s}
+.pipe li{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.pipe li::before{counter-increment:s;content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--nb);color:var(--nt);display:grid;place-items:center;font-weight:700;font-size:13px}
+.pipe li.d::before{content:"✓";background:var(--okb);color:var(--okt)}.pipe li.act{border-color:var(--pb);box-shadow:0 0 0 3px var(--acs);transform:translateY(-2px)}.pipe li.act::before{background:var(--pb);color:var(--pt)}.pipe li.f{border-color:var(--bat)}.pipe li.f::before{content:"!";background:var(--bab);color:var(--bat)}
+.bar{height:6px;background:var(--nb);border-radius:99px;overflow:hidden;margin:16px 0}.bar i{display:block;height:100%;background:var(--pb);border-radius:99px}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}.kpi .cd{margin:0;padding:16px}.kpi b{display:block;font-size:26px;letter-spacing:-.02em}.lead{border-left:4px solid var(--pb)}
 
 /* Print & PDF Export Styling */
 @media print {
   body { background: #fff !important; color: #111 !important; font-size: 11pt !important; }
-  .sb, .tabs, .presets, button, .note, [data-act], nav, #live { display: none !important; }
+  .sb, .tabs, .presets, button, .note, [data-act], nav, #live, .bar { display: none !important; }
   .sh { display: block !important; }
   .mn { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
   .cd { background: #fff !important; border: 1px solid #ccc !important; box-shadow: none !important; margin: 8pt 0 !important; padding: 12pt !important; page-break-inside: avoid; }
@@ -57,8 +64,8 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
   .tg { border: 1px solid #ccc !important; }
 }
 
-@media(max-width:760px){.sh{flex-direction:column}.sb{width:auto;flex-direction:row;overflow-x:auto;padding:8px}.br{display:none}.note{display:none}.mn{padding:20px}.g2{grid-template-columns:1fr}h1{font-size:26px}}
-@media(prefers-reduced-motion:no-preference){.tg.run{animation:p 1.4s ease-in-out infinite}@keyframes p{50%{opacity:.6}}}
+@media(max-width:760px){.sh{flex-direction:column}.sb{width:auto;flex-direction:row;overflow-x:auto;padding:8px}.br{display:none}.note{display:none}.mn{padding:20px}.g2{grid-template-columns:1fr}h1{font-size:26px}.pipe,.kpi{grid-template-columns:1fr}.hero{padding:20px}}
+@media(prefers-reduced-motion:no-preference){.tg.run{animation:p 1.4s ease-in-out infinite}@keyframes p{50%{opacity:.6}}@keyframes in{from{opacity:0;transform:translateY(8px)}}@keyframes pop{from{opacity:0;transform:scale(.85)}}.enter>*{animation:in .35s ease both}.enter>*:nth-child(2){animation-delay:.05s}.enter>*:nth-child(3){animation-delay:.1s}.enter>*:nth-child(n+4){animation-delay:.15s}[role=tabpanel]{animation:in .3s ease both}.lg li:last-child{animation:in .3s ease}.sl .tg{animation:pop .3s ease both}.pipe li{transition:border-color .3s,box-shadow .3s,transform .3s}.pipe li::before{transition:background .3s,color .3s}.pipe li.act{transform:translateY(-2px)}.bar i{transition:width .5s ease}.bt{transition:filter .2s,transform .2s}.bt:hover{transform:translateY(-1px)}.cd{transition:box-shadow .2s}}
 </style>
 </head>
 <body>
@@ -74,7 +81,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const host=u=>u.replace(/^\w+:\/\//,'').split('/')[0];
 const LBL={fetched:'Fetched',blocked:'Blocked by robots.txt',failed:'Timed out',sample:'Sample data'};
 const CLS={fetched:'ok',sample:'info',blocked:'bad',failed:'bad',done:'ok',run:'run',wait:'',fail:'bad'};
-const tag=(k,t)=>`<i class="tg ${CLS[k]??''}">${esc(t)}</i>`;
+const tag=(k,t)=>`<i class="tg ${CLS[k]??''}">${esc(t)}</i>`;const LC=v=>({done:'d',run:'act',fail:'f',wait:''})[v]||'';
 const ROLES=[['O','Orchestrator','Receives the query and starts the run'],['R','Researcher','Searches the web and scrapes pages'],['A','Analyst','Writes the brief from the findings'],['C','Critic','Reviews it and asks for one revision if needed']];
 const S={view:'new',q:'',sample:false,fail:false,run:null,tab:'brief',ts:null,chk:null,hist:[]};
 let token=0;
@@ -414,16 +421,16 @@ async function start(o) {
   go('result');
 }
 
-const steps = r => `<ol class="cd sl" id="steps">${ROLES.map(([k,n,d]) => {
+const steps = r => `<ol class="pipe" id="steps">${ROLES.map(([k,n,d]) => {
   const v = r.st[k];
   const t = v === 'wait' && r.err ? 'Not started' : ({ done: 'Done', run: 'Running', wait: 'Waiting', fail: 'Failed' })[v];
-  return `<li class="${v === 'run' ? 'act' : ''}"><b>${n}</b>${tag(v, t)}<span class="mt">${d}</span></li>`;
+  return `<li data-k="${k}" class="${LC(v)}"><b>${n}</b>${tag(v, t)}<span class="mt">${d}</span></li>`;
 }).join('')}</ol>`;
 
-const logBox = r => `<ul class="cd lg" id="log" role="log" aria-label="Scraping log">${r.log.map(l => `<li>${esc(l)}</li>`).join('') || '<li>Waiting to start</li>'}</ul>`;
+const logBox = r => `<ul class="cd lg" id="log" data-n="${r.log.length}" role="log" aria-label="Scraping log">${r.log.map(l => `<li>${esc(l)}</li>`).join('') || '<li>Waiting to start</li>'}</ul>`;
 
 function vNew() {
-  return `<h1 tabindex="-1">New research</h1><p class="mt">Enter a company or industry. Four agents research it and write a short brief.</p>
+  return `<div class="hero"><h1 tabindex="-1">New research</h1><p class="mt">Enter a company or industry. Four agents research it and write a short brief.</p></div>
 <div class="presets">
   <span class="mt" style="align-self:center;font-weight:600;">Presets:</span>
   <button class="preset-btn" onclick="$('#q').value='Analyze the food delivery market in Nepal.';$('#q').focus();">Food delivery in Nepal</button>
@@ -435,25 +442,40 @@ function vNew() {
 <form class="cd" id="f" novalidate><label class="lb" for="q">Company or industry</label><input class="in" id="q" autocomplete="off" aria-describedby="qh" value="${esc(S.q)}" placeholder="e.g., Tesla, Netflix, or Food delivery market in Nepal"><p class="mt" id="qh">Enter a target company name or industry topic to generate a multi-agent research brief.</p><p class="err" id="qe" hidden></p>
 <fieldset><legend class="lb">Data source</legend><label class="rd"><input type="radio" name="ds" value="web" ${S.sample ? '' : 'checked'}> Web search with scraping</label><label class="rd"><input type="radio" name="ds" value="sample" ${S.sample ? 'checked' : ''}> Sample data <span class="mt">(labelled as sample in the brief)</span></label></fieldset>
 <details><summary>Prototype controls</summary><label class="rd"><input type="checkbox" id="fail" ${S.fail ? 'checked' : ''}> Simulate a failed web search</label></details>
-<button class="bt" type="submit">Start research</button></form>
+<button class="bt" type="submit">Start research</button></form><h2>What happens next</h2><ol class="pipe">${ROLES.map(([k,n,d])=>`<li><b>${n}</b><span class="mt">${d}</span></li>`).join('')}</ol>
 <h2>Recent briefs</h2>${S.hist.length ? `<ul class="cd sl">${S.hist.slice(0, 3).map((h, i) => `<li><b>${esc(h.q)}</b><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button><span class="mt">${esc(h.time)}</span></li>`).join('')}</ul>` : `<div class="cd em"><p><b>No briefs yet</b></p><p class="mt">Finished briefs appear here so you can open them again.</p></div>`}`;
 }
 
 function vRun() {
   const r = S.run;
   if (r.err) return `<h1 tabindex="-1">Research stopped at the Researcher</h1><div class="cd" role="alert" style="border-color:var(--bat)"><p><b>${esc(r.err)}</b></p><p class="mt">Your query “${esc(r.q)}” is kept. Try again, or run it on sample data, which the brief labels clearly.</p><button class="bt" data-act="retry">Try again</button><button class="b2" data-act="sample">Use sample data</button><button class="b2" data-act="edit">Edit query</button></div>${steps(r)}`;
-  return `<h1 tabindex="-1">Researching “${esc(r.q)}”</h1><p class="mt" id="stat">Agents are working. The brief appears when the Critic is done.</p>${steps(r)}<h2>Scraping log</h2>${logBox(r)}<div class="cd" aria-busy="true" aria-label="Brief loading"><div class="sk" style="width:40%"></div><div class="sk"></div><div class="sk" style="width:80%"></div></div><button class="b2" data-act="cancel">Cancel research</button>`;
+  return `<h1 tabindex="-1">Researching “${esc(r.q)}”</h1><p class="mt" id="stat">Agents are working. The brief appears when the Critic is done.</p><div class="bar" aria-hidden="true"><i id="pb" style="width:${Object.values(r.st).reduce((a,v)=>a+(v==='done'?25:v==='run'?12:0),0)}%"></i></div>${steps(r)}<h2>Scraping log</h2>${logBox(r)}<div class="cd" aria-busy="true" aria-label="Brief loading"><div class="sk" style="width:40%"></div><div class="sk"></div><div class="sk" style="width:80%"></div></div><button class="b2" data-act="cancel">Cancel research</button>`;
 }
 
 function upd() {
   if (S.view !== 'run' || S.run.err) return;
-  $('#steps').outerHTML = steps(S.run);
+  const r = S.run;
+  let w = 0;
+  ROLES.forEach(([k, n]) => {
+    const v = r.st[k], li = $(`#steps [data-k=${k}]`);
+    if (!li) return;
+    li.className = LC(v);
+    const t = li.querySelector('.tg');
+    if (t) {
+      t.className = 'tg ' + (CLS[v] ?? '');
+      t.textContent = ({ done: 'Done', run: 'Running', wait: 'Waiting', fail: 'Failed' })[v];
+    }
+    w += v === 'done' ? 25 : v === 'run' ? 12 : 0;
+    if (v === 'run') say(n + ' is running');
+  });
+  const pb = $('#pb');
+  if (pb) pb.style.width = w + '%';
   const l = $('#log');
-  l.outerHTML = logBox(S.run);
-  const n = $('#log');
-  n.scrollTop = n.scrollHeight;
-  const a = ROLES.find(([k]) => S.run.st[k] === 'run');
-  if (a) say(a[1] + ' is running');
+  if (l && +l.dataset.n !== r.log.length) {
+    l.innerHTML = r.log.map(x => `<li>${esc(x)}</li>`).join('');
+    l.dataset.n = r.log.length;
+    l.scrollTop = l.scrollHeight;
+  }
 }
 
 const checks = r => {
@@ -471,8 +493,8 @@ const checks = r => {
 const pBrief = r => {
   const b = r.final;
   return `<div id="brief-render-area">
-<h2>Summary</h2><div class="cd"><p>${esc(b.summary)}</p></div>
-<h2>Competitors</h2><div class="g2">${b.competitors.map(c => `<div class="cd"><b style="font-size:16px;">${esc(c.name)}</b><p class="mt" style="margin-top:6px;line-height:1.6;">${esc(c.desc)}</p></div>`).join('')}</div><p class="mt">Shown only when relevant, up to two.</p>
+<h2>Summary</h2><div class="cd lead"><p>${esc(b.summary)}</p></div>
+<h2>Competitors</h2><div class="g2">${b.competitors.map(c => typeof c === 'object' ? `<div class="cd"><b style="font-size:16px;">${esc(c.name)}</b><p class="mt" style="margin-top:6px;line-height:1.6;">${esc(c.desc)}</p></div>` : `<div class="cd"><b>${esc(c)}</b><p class="mt">[Primary competitor in sector]</p></div>`).join('')}</div><p class="mt">Shown only when relevant, up to two.</p>
 <h2>Key observations</h2><ul class="cd" style="line-height:1.7;">${b.obs.map(o => `<li style="margin-bottom:6px;">${esc(o)}</li>`).join('')}</ul>
 <h2>Sources</h2><ul class="cd">${r.sources.map(s => `<li>${esc(s.t)} <span class="mt">${esc(host(s.u))}</span> ${tag(s.st, LBL[s.st])}</li>`).join('')}</ul>
 <h2>Missing information</h2><ul class="cd em">${b.missing.map(m => `<li>${esc(m)}</li>`).join('')}</ul>
@@ -513,7 +535,7 @@ const pData = r => {
 
 function vRes() {
   const r = S.run, T = [['brief', 'Brief'], ['src', 'Sources and scraping'], ['chk', 'Quality checks'], ['data', 'Data passed']], P = { brief: pBrief, src: pSrc, chk: pChk, data: pData };
-  return `<h1 tabindex="-1">${esc(r.entity || r.q)}</h1><p>${tag('done', 'Reviewed by Critic')} ${tag('', 'Revisions: ' + r.rev)} ${tag(r.sample ? 'sample' : 'fetched', r.sample ? 'Sample data' : 'Web search')}</p><div class="tabs" role="tablist" aria-label="Brief sections">${T.map(([k, n]) => `<button role="tab" id="t-${k}" data-t="${k}" aria-selected="${S.tab === k}" tabindex="${S.tab === k ? 0 : -1}">${n}</button>`).join('')}</div><div role="tabpanel" aria-labelledby="t-${S.tab}">${P[S.tab](r)}</div>`;
+  return `<h1 tabindex="-1">${esc(r.entity || r.q)}</h1><p>${tag('done', 'Reviewed by Critic')} ${tag('', 'Revisions: ' + r.rev)} ${tag(r.sample ? 'sample' : 'fetched', r.sample ? 'Sample data' : 'Web search')}</p><div class="kpi"><div class="cd"><b>${r.sources.filter(s=>s.st==='fetched'||s.st==='sample').length} of ${r.sources.length}</b><span class="mt">sources read</span></div><div class="cd"><b>${r.rev}</b><span class="mt">${r.rev===1?'revision':'revisions'} requested</span></div><div class="cd"><b>${checks(r).filter(x=>x[1]).length} of ${checks(r).length}</b><span class="mt">quality checks passed</span></div></div><div class="tabs" role="tablist" aria-label="Brief sections">${T.map(([k, n]) => `<button role="tab" id="t-${k}" data-t="${k}" aria-selected="${S.tab === k}" tabindex="${S.tab === k ? 0 : -1}">${n}</button>`).join('')}</div><div role="tabpanel" aria-labelledby="t-${S.tab}">${P[S.tab](r)}</div>`;
 }
 
 function vHist() {
@@ -526,7 +548,8 @@ function vHelp() {
 
 const V = { new: vNew, run: vRun, result: vRes, history: vHist, help: vHelp };
 
-function render() {
+function render(enter) {
+  $('#m').className = 'mn' + (enter ? ' enter' : '');
   $('#m').innerHTML = V[S.view]();
   $$('.sb button').forEach(b => b.toggleAttribute('aria-current', false));
   const n = S.view === 'history' || S.view === 'help' ? S.view : 'new';
@@ -538,7 +561,7 @@ function render() {
 
 function go(v) {
   S.view = v;
-  render();
+  render(true);
   $('#m h1')?.focus();
   window.scrollTo(0, 0);
   if (v === 'result') say('Brief ready');
