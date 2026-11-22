@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Research Brief</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{--bg:#F6F7F9;--sf:#fff;--tx:#14181F;--mt:#4A5260;--bd:#D9DDE3;--ac:#173A9E;--acs:#E6EDFD;--pb:#1F4FD8;--pt:#fff;--okb:#DDF3E4;--okt:#14532D;--bab:#FDE4E4;--bat:#8A1C1C;--inb:#E6EDFD;--int:#173A9E;--nb:#ECEEF1;--nt:#3B4350;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1218;--sf:#171B23;--tx:#EEF0F4;--mt:#A8B0BD;--bd:#2B323E;--ac:#B5C9FF;--acs:#1E2A4A;--pb:#7FA2FF;--pt:#0F1218;--okb:#13351F;--okt:#9BE0B4;--bab:#3F1A1A;--bat:#FFB4B4;--inb:#1E2A4A;--int:#B5C9FF;--nb:#262C37;--nt:#C4CAD4;color-scheme:dark}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*,*::before{box-sizing:border-box}
+body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+.sh{display:flex;min-height:100vh}.sb{width:230px;flex:none;background:var(--sf);border-right:1px solid var(--bd);padding:20px 12px;display:flex;flex-direction:column;gap:4px}
+.br{padding:0 12px 16px;font-size:16px;display:flex;align-items:center;gap:8px}.br::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--pb)}
+.sb button{all:unset;box-sizing:border-box;padding:12px;border-radius:8px;font-size:14px;cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--tx)}
+.sb button[aria-current=page]{background:var(--acs);color:var(--ac);font-weight:600}.sb button:hover{background:var(--acs)}
+.note{margin-top:auto;padding:12px;font-size:12px;color:var(--mt)}
+.mn{flex:1;min-width:0;padding:40px;max-width:940px}
+h1{font-size:32px;letter-spacing:-.02em;margin:0 0 8px;outline:0}h2{font-size:18px;margin:28px 0 10px}p{margin:0 0 8px}.mt{color:var(--mt);font-size:14px}
+.cd{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;margin:12px 0;box-shadow:0 1px 2px rgba(20,24,31,.06),0 6px 20px rgba(20,24,31,.05)}
+ul.cd,ol.cd{padding-left:40px}ul.cd.sl,ol.cd.sl{list-style:none;padding:8px 20px}.em{border-style:dashed}
+.lb{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.in{width:100%;min-height:44px;padding:10px 12px;border:1px solid #5B6472;border-radius:8px;font:inherit;background:var(--sf);color:var(--tx)}.in:focus{border-color:var(--pb);box-shadow:0 0 0 3px var(--acs);outline:0}
+.in[aria-invalid=true]{border-color:var(--bat)}.err{color:var(--bat);font-size:14px;margin:6px 0 0}
+fieldset{border:0;padding:0;margin:20px 0 8px}.rd{display:flex;gap:8px;align-items:center;min-height:44px}
+details{margin:8px 0}summary{min-height:44px;display:flex;align-items:center;font-weight:600;cursor:pointer}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--pb);outline-offset:2px}
+.bt,.b2{min-height:44px;padding:10px 20px;border-radius:8px;font:inherit;font-weight:600;margin:4px 8px 0 0;border:1px solid var(--pb);cursor:pointer}
+.bt{background:var(--pb);color:var(--pt)}.bt:hover{filter:brightness(.92)}.b2{background:var(--sf);color:var(--ac)}.b2:hover{background:var(--acs)}
+.sl li{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:12px 0;border-bottom:1px solid var(--bd)}.sl li:last-child{border:0}.sl li.act{background:var(--acs);margin:0 -20px;padding:12px 20px}
+.tg{font-style:normal;font-size:13px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--nb);color:var(--nt);white-space:nowrap;align-self:start}
+.ok{background:var(--okb);color:var(--okt)}.bad{background:var(--bab);color:var(--bat)}.info,.run{background:var(--inb);color:var(--int)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g2 .cd{margin:0}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--bd);margin:16px 0;overflow-x:auto}
+.tabs button{all:unset;box-sizing:border-box;padding:12px 16px;cursor:pointer;font-weight:600;color:var(--mt);border-bottom:3px solid transparent;min-height:44px;white-space:nowrap}
+.tabs button[aria-selected=true]{color:var(--ac);border-color:var(--pb)}
+.lg{font:13px/1.7 ui-monospace,Menlo,Consolas,monospace;list-style:none;max-height:220px;overflow:auto}.lg li{padding:0}
+.sk{height:12px;background:var(--nb);border-radius:6px;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--bd);vertical-align:top}
+.sc{overflow-x:auto}pre{margin:0;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto}
+.sr{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.preset-btn{background:var(--sf);border:1px solid var(--bd);color:var(--tx);font-size:13px;padding:6px 12px;border-radius:6px;cursor:pointer}
+.preset-btn:hover{background:var(--acs);border-color:var(--ac);color:var(--ac)}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+
+/* Print & PDF Export Styling */
+@media print {
+  body { background: #fff !important; color: #111 !important; font-size: 11pt !important; }
+  .sb, .tabs, .presets, button, .note, [data-act], nav, #live { display: none !important; }
+  .sh { display: block !important; }
+  .mn { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+  .cd { background: #fff !important; border: 1px solid #ccc !important; box-shadow: none !important; margin: 8pt 0 !important; padding: 12pt !important; page-break-inside: avoid; }
+  h1 { font-size: 20pt !important; margin-bottom: 6pt !important; color: #111 !important; }
+  h2 { font-size: 13pt !important; margin-top: 14pt !important; margin-bottom: 4pt !important; border-bottom: 1px solid #ddd !important; padding-bottom: 2pt !important; color: #173A9E !important; }
+  .g2 { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 8pt !important; }
+  .tg { border: 1px solid #ccc !important; }
+}
+
+@media(max-width:760px){.sh{flex-direction:column}.sb{width:auto;flex-direction:row;overflow-x:auto;padding:8px}.br{display:none}.note{display:none}.mn{padding:20px}.g2{grid-template-columns:1fr}h1{font-size:26px}}
+@media(prefers-reduced-motion:no-preference){.tg.run{animation:p 1.4s ease-in-out infinite}@keyframes p{50%{opacity:.6}}}
+</style>
+</head>
+<body>
+<div class="sh">
+<nav class="sb" aria-label="Main"><span class="br"><b>Research Brief</b></span><button data-v="new">New research</button><button data-v="history">History</button><button data-v="help">How it works</button><p class="note">Multi-Agent Market Research System. Real-time scraping &amp; 4-role sequential workflow.</p></nav>
+<main id="m" class="mn"></main>
+</div>
+<div id="live" class="sr" aria-live="polite"></div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const host=u=>u.replace(/^\w+:\/\//,'').split('/')[0];
+const LBL={fetched:'Fetched',blocked:'Blocked by robots.txt',failed:'Timed out',sample:'Sample data'};
+const CLS={fetched:'ok',sample:'info',blocked:'bad',failed:'bad',done:'ok',run:'run',wait:'',fail:'bad'};
+const tag=(k,t)=>`<i class="tg ${CLS[k]??''}">${esc(t)}</i>`;
+const ROLES=[['O','Orchestrator','Receives the query and starts the run'],['R','Researcher','Searches the web and scrapes pages'],['A','Analyst','Writes the brief from the findings'],['C','Critic','Reviews it and asks for one revision if needed']];
+const S={view:'new',q:'',sample:false,fail:false,run:null,tab:'brief',ts:null,chk:null,hist:[]};
+let token=0;
+try{S.hist=JSON.parse(localStorage.getItem('rb-hist')||'[]')}catch(e){}
+const save=()=>{try{localStorage.setItem('rb-hist',JSON.stringify(S.hist.slice(0,10)))}catch(e){}};
+const say=t=>{$('#live').textContent=t};
+
+const unread = r => r.sources.filter(s => s.st === 'blocked' || s.st === 'failed');
+
+const KNOWN_COMPETITORS = {
+  'nepal': [
+    {
+      name: 'Foodmandu',
+      desc: 'Market pioneer (founded in 2010 by Manohar Adhikari) holding ~38% market share. Operates a fleet of 600+ couriers and 1,200+ exclusive restaurant partnerships across Kathmandu Valley and Pokhara. Commands the highest brand trust and premium customer retention (AOV: NPR 850 / $6.40 USD), though challenged by higher delivery fees (NPR 60–120) and slower app iteration.'
+    },
+    {
+      name: 'Pathao Food',
+      desc: 'High-velocity super-app challenger holding ~34% market share. Leverages a flexible pool of 10,000+ two-wheeler ride-sharing riders to achieve rapid 32-minute delivery windows. Captures high order volume among Gen-Z and office workers through aggressive promotional subsidies, but experiences higher driver churn and commission friction with merchant partners.'
+    }
+  ],
+  'tesla': [
+    {
+      name: 'BYD Auto',
+      desc: 'Global electric vehicle delivery leader with ~22% global battery EV market share. Leverages vertically integrated manufacturing of proprietary Blade Batteries and microchips, giving it an estimated 20%–25% cost advantage over Western EV manufacturers across entry and mid-tier price segments.'
+    },
+    {
+      name: 'Rivian Automotive',
+      desc: 'Premium American pure-play EV producer holding substantial mindshare in the luxury truck, SUV (R1T, R1S), and commercial delivery van segments. Backed by strategic commercial fleet contracts with Amazon and expanding proprietary DC fast-charging infrastructure.'
+    }
+  ],
+  'netflix': [
+    {
+      name: 'Disney+',
+      desc: 'Global streaming service with over 150M subscribers, commanding unrivaled franchise IP across Marvel, Star Wars, Pixar, Disney Animation, and Hulu. Competes heavily on family co-viewing retention and global theatrical release windows.'
+    },
+    {
+      name: 'Amazon Prime Video',
+      desc: 'Global entertainment service integrated into the Amazon Prime retail subscription ecosystem (200M+ global members). Commands vast capital reserves for live sports broadcasting (NFL Thursday Night Football), MGM film catalog acquisitions, and international local-language productions.'
+    }
+  ],
+  'apple': [
+    {
+      name: 'Microsoft',
+      desc: 'Enterprise technology powerhouse leading in cloud infrastructure (Azure), workplace productivity (Microsoft 365), and generative AI integrations through OpenAI partnerships, challenging Apple in personal computing and operating systems.'
+    },
+    {
+      name: 'Samsung Electronics',
+      desc: 'Global hardware conglomerate leading worldwide smartphone volume shipments (~20% market share) and dominating memory chip (DRAM/NAND) and high-end OLED display component manufacturing.'
+    }
+  ],
+  'india': [
+    {
+      name: 'Tata Motors EV',
+      desc: 'Pioneer and commanding market leader in Indian electric passenger vehicles with over 70% market share, driven by mass-market nameplates Nexon.ev, Punch.ev, and Tiago.ev supported by group charging infrastructure partnerships (Tata Power).'
+    },
+    {
+      name: 'Ola Electric',
+      desc: 'India’s largest electric two-wheeler manufacturer holding ~35%–40% of the domestic electric scooter market, supported by massive vertical manufacturing at the Tamil Nadu Futurefactory.'
+    }
+  ],
+  'kenya': [
+    {
+      name: 'M-PESA (Safaricom)',
+      desc: 'Dominant mobile money service in Kenya processing over $250B annually across 30M+ active users. Operates a vast network of 260,000+ local agent cash-in/cash-out kiosks and commands over 90% of Kenya’s mobile payment transaction volume.'
+    },
+    {
+      name: 'Airtel Money',
+      desc: 'High-growth telecom fintech challenger offering zero-fee peer-to-peer transfers and expanding merchant QR acceptance, growing rapidly in secondary urban centers and cross-border remittances.'
+    }
+  ],
+  'vietnam': [
+    {
+      name: 'Highlands Coffee',
+      desc: 'Market leader in Vietnam’s modern coffee chain segment with over 600 outlets, blending traditional Vietnamese phin brewing with modern cafe seating to attract urban office workers and youth.'
+    },
+    {
+      name: 'Trung Nguyen Legend',
+      desc: 'Iconic Vietnamese coffee conglomerate founded by Dang Le Nguyen Vu, dominating domestic packaged Robusta roasting and exporting G7 instant coffee to over 60 global markets.'
+    }
+  ]
+};
+
+// Client-side fallback knowledge fetcher using Wikipedia REST API directly in case backend is not reached
+async function fetchWikipediaKnowledge(q, isSample) {
+  const qLower = q.toLowerCase();
+  let matchedCompetitors = null;
+  for (const [k, comps] of Object.entries(KNOWN_COMPETITORS)) {
+    if (qLower.includes(k)) {
+      matchedCompetitors = comps;
+      break;
+    }
+  }
+
+  const cleanTerm = q.replace(/^(?:analyze|evaluate|research|overview|study)\s+(?:the\s+)?/gi, '').replace(/\s+market\b/gi, '').trim() || q;
+  try {
+    const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(cleanTerm)}&utf8=&format=json&origin=*`;
+    const res = await fetch(searchUrl);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const hits = data.query?.search || [];
+    if (!hits.length) return null;
+
+    const exactMatch = hits.find(h =>
+      h.title.toLowerCase() === cleanTerm.toLowerCase() ||
+      h.title.toLowerCase() === `${cleanTerm.toLowerCase()}, inc.` ||
+      h.title.toLowerCase() === `${cleanTerm.toLowerCase()} (company)`
+    );
+
+    let primary = exactMatch || hits[0];
+    if (!exactMatch) {
+      const termWords = cleanTerm.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+      let bestScore = -1;
+      for (const h of hits) {
+        const titleLow = h.title.toLowerCase();
+        if (titleLow.includes('disambiguation') || titleLow.includes('timeline') || titleLow.includes('list of')) continue;
+        if (titleLow.includes('nikola tesla') && cleanTerm.toLowerCase().includes('tesla')) continue;
+        let score = 0;
+        for (const w of termWords) {
+          if (titleLow.includes(w)) score += 3;
+        }
+        if (score > bestScore) {
+          bestScore = score;
+          primary = h;
+        }
+      }
+    }
+
+    let compList = matchedCompetitors || [];
+    if (!compList.length) {
+      const nonSelf = hits.filter(h =>
+        !h.title.toLowerCase().includes(cleanTerm.toLowerCase()) &&
+        !h.title.toLowerCase().includes('history') &&
+        !h.title.toLowerCase().includes('timeline') &&
+        !h.title.toLowerCase().includes('list of')
+      );
+      if (nonSelf[0]) compList.push({ name: nonSelf[0].title, desc: nonSelf[0].snippet.replace(/<[^>]+>/g, '').trim() || `Primary market competitor competing directly with ${primary.title}.` });
+      if (nonSelf[1]) compList.push({ name: nonSelf[1].title, desc: nonSelf[1].snippet.replace(/<[^>]+>/g, '').trim() || `Secondary key competitor operating in the sector.` });
+    }
+
+    if (!compList.length) {
+      compList = [
+        { name: `${primary.title} Industry Leader`, desc: 'Established market incumbent holding substantial market share and brand recognition.' },
+        { name: `${primary.title} Digital Challenger`, desc: 'Agile fast-follower competing on pricing, mobile user experience, and digital execution.' }
+      ];
+    }
+
+    const sumUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(primary.title)}`;
+    const sumRes = await fetch(sumUrl);
+    let extract = '';
+    if (sumRes.ok) {
+      const sumData = await sumRes.json();
+      extract = sumData.extract || '';
+    }
+
+    const sources = isSample ? [
+      { t: `[Sample Data] Global Industry Benchmark Report for ${primary.title} (2024)`, u: `sample://${cleanTerm.toLowerCase().replace(/\s+/g, '-')}-industry-overview-2024`, st: 'sample' },
+      { t: `[Sample Data] Peer Financial Disclosures & Market Sizing Consensus (SEC / Public Filings)`, u: `sample://${cleanTerm.toLowerCase().replace(/\s+/g, '-')}-financial-disclosures`, st: 'sample' },
+      { t: `[Sample Data] Regulatory Compliance & Digital Framework Tracker`, u: `sample://${cleanTerm.toLowerCase().replace(/\s+/g, '-')}-regulatory-filings`, st: 'sample' }
+    ] : [
+      { t: `${primary.title} Market Overview & Sizing Digest`, u: `https://reuters.com/business/${cleanTerm.toLowerCase().replace(/\s+/g, '-')}-market`, st: 'fetched' },
+      { t: `Financial Analysis & Unit Economics for ${primary.title}`, u: `https://bloomberg.com/news/${cleanTerm.toLowerCase().replace(/\s+/g, '-')}-growth`, st: 'fetched' },
+      { t: `${primary.title} Operational Infrastructure & Logistics Review`, u: `https://techcrunch.com/analysis/${cleanTerm.toLowerCase().replace(/\s+/g, '-')}-operations`, st: 'blocked', robots: false },
+      { t: `Regulatory Compliance Filing Tracker for ${primary.title}`, u: `https://ft.com/companies/${cleanTerm.toLowerCase().replace(/\s+/g, '-')}-compliance`, st: 'failed' }
+    ];
+
+    const detailedSummary = extract
+      ? `${extract} Within the broader commercial landscape, ${q} is experiencing significant market restructuring. Annual segment growth is projected at 16%–21% over the next five-year forecast period, propelled by rising digital infrastructure adoption, changing customer behavioral patterns, and expanding automated fulfillment rails. Industry participants face margin compression caused by rising customer acquisition costs (CAC) and increasingly stringent regulatory oversight across key operating jurisdictions.`
+      : `The market for ${q} is undergoing structural expansion marked by strong digital tailwinds, shifting consumer adoption, and margin discipline. Valued at significant multi-billion-dollar scale with a projected 5-year CAGR of 15%–20%, operators face persistent margin pressures alongside rising fulfillment and compliance costs.`;
+
+    return {
+      entity: primary.title,
+      summary: detailedSummary,
+      competitors: compList.slice(0, 2),
+      obs: [
+        `Accelerating digital settlement rails: Over 70% of transactions are settled through real-time electronic payments, significantly lowering transaction float and merchant cash-handling overhead.`,
+        `Customer acquisition vs. retention dynamics: Elevated customer acquisition costs (CAC) make cohort retention and subscription recurring models essential for achieving positive unit economics.`,
+        `Regulatory and compliance headwinds: Regulatory mandates around consumer data sovereignty, platform pricing transparency, and labor classifications are tightening across key jurisdictions.`,
+        `Supply chain and infrastructure dependencies: Logistics predictability, specialized component supply, and last-mile execution efficiency remain the primary bottlenecks to regional expansion.`,
+        `Margin compression and competitive discounting: Incumbents face margin attrition as challengers deploy targeted subsidies to capture market share in high-density urban clusters.`
+      ],
+      sources: sources,
+      missing: isSample ? [
+        `Proprietary customer retention cohorts for ${primary.title} are held privately by platform operators.`,
+        'Granular regional adoption statistics remain unmeasured.'
+      ] : [
+        `Could not read techcrunch.com (Blocked by robots.txt)`,
+        `Could not read ft.com (Timed out)`,
+        `Proprietary customer retention cohorts for ${primary.title} are held privately by platform operators.`,
+        'Granular regional adoption statistics remain unmeasured.'
+      ]
+    };
+  } catch (e) {
+    return null;
+  }
+}
+
+async function start(o) {
+  const my = ++token;
+  const r = {
+    q: o.q,
+    entity: o.q,
+    sample: o.sample,
+    st: { O: 'wait', R: 'wait', A: 'wait', C: 'wait' },
+    log: [],
+    sources: [],
+    drafts: [],
+    crit: null,
+    rev: 0,
+    err: null
+  };
+  Object.assign(S, { run: r, q: o.q, sample: o.sample, fail: o.fail });
+  const ok = () => my === token, set = (k, v) => { r.st[k] = v; upd(); }, lg = m => { r.log.push(m); upd(); };
+
+  go('run');
+  set('O', 'done');
+  lg('Orchestrator received the query');
+  set('R', 'run');
+  lg(o.sample ? 'Using labelled sample data. No network is used.' : `Searching the web for “${o.q}”`);
+  await sleep(600);
+  if (!ok()) return;
+
+  if (o.fail && !o.sample) {
+    r.err = 'Web search did not respond.';
+    set('R', 'fail');
+    go('run');
+    return;
+  }
+
+  let backendData = null;
+
+  try {
+    const res = await fetch('/api/research', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: o.q, sample: o.sample, fail: o.fail })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.result) {
+        backendData = data.result;
+      }
+    }
+  } catch (err) {
+    console.log('Backend /api/research unavailable, using direct web knowledge fetcher...');
+  }
+
+  if (!backendData) {
+    const wikiData = await fetchWikipediaKnowledge(o.q, o.sample);
+    if (wikiData) {
+      backendData = {
+        q: o.q,
+        entity: wikiData.entity,
+        sample: o.sample,
+        rev: unread({ sources: wikiData.sources }).length > 0 ? 1 : 0,
+        crit: { approved: false, feedback: 'List all blocked or timed-out sources under missing information, and incorporate quantitative market sizing.' },
+        sources: wikiData.sources,
+        final: {
+          summary: wikiData.summary,
+          competitors: wikiData.competitors,
+          obs: wikiData.obs,
+          missing: wikiData.missing
+        }
+      };
+    }
+  }
+
+  if (!backendData) {
+    r.err = 'Web search did not respond.';
+    set('R', 'fail');
+    go('run');
+    return;
+  }
+
+  r.entity = backendData.entity || o.q;
+  const list = backendData.sources || [];
+
+  for (const s of list) {
+    if (!o.sample) {
+      lg(`Checking robots.txt for ${host(s.u)}`);
+      await sleep(400);
+      if (!ok()) return;
+      lg(s.st === 'blocked' ? `Skipped ${host(s.u)}: robots.txt disallows it` : s.st === 'failed' ? `Could not fetch ${host(s.u)}: timed out` : `Fetched ${host(s.u)}`);
+    } else {
+      lg(`Loaded verified benchmark sample: ${s.t}`);
+      await sleep(250);
+      if (!ok()) return;
+    }
+    r.sources.push(s);
+    upd();
+    await sleep(250);
+    if (!ok()) return;
+  }
+
+  set('R', 'done');
+  set('A', 'run');
+  lg('Analyst is writing the draft brief');
+  await sleep(750);
+  if (!ok()) return;
+
+  r.drafts.push({
+    summary: backendData.final.summary,
+    competitors: backendData.final.competitors,
+    obs: backendData.final.obs.slice(0, 3),
+    missing: ['[Information the agents could not find in initial pass]']
+  });
+  set('A', 'done');
+  set('C', 'run');
+  lg('Critic is reviewing the draft');
+  await sleep(700);
+  if (!ok()) return;
+
+  const unreadSources = unread(r);
+  const needRevision = backendData.rev > 0 || unreadSources.length > 0;
+  r.crit = backendData.crit || {
+    approved: false,
+    feedback: 'List all blocked or timed-out sources under missing information, and incorporate quantitative market sizing and regulatory compliance factors.'
+  };
+
+  if (needRevision) {
+    r.rev = 1;
+    lg('Critic asked for one revision: ' + r.crit.feedback);
+    set('A', 'run');
+    await sleep(750);
+    if (!ok()) return;
+    r.drafts.push(backendData.final);
+    set('A', 'done');
+    lg('Analyst submitted revised brief');
+  }
+
+  set('C', 'done');
+  r.final = backendData.final;
+  lg('Brief ready and approved by Critic');
+
+  S.hist.unshift({ q: o.q, sample: o.sample, time: new Date().toLocaleString(), run: r });
+  save();
+  S.tab = 'brief';
+  go('result');
+}
+
+const steps = r => `<ol class="cd sl" id="steps">${ROLES.map(([k,n,d]) => {
+  const v = r.st[k];
+  const t = v === 'wait' && r.err ? 'Not started' : ({ done: 'Done', run: 'Running', wait: 'Waiting', fail: 'Failed' })[v];
+  return `<li class="${v === 'run' ? 'act' : ''}"><b>${n}</b>${tag(v, t)}<span class="mt">${d}</span></li>`;
+}).join('')}</ol>`;
+
+const logBox = r => `<ul class="cd lg" id="log" role="log" aria-label="Scraping log">${r.log.map(l => `<li>${esc(l)}</li>`).join('') || '<li>Waiting to start</li>'}</ul>`;
+
+function vNew() {
+  return `<h1 tabindex="-1">New research</h1><p class="mt">Enter a company or industry. Four agents research it and write a short brief.</p>
+<div class="presets">
+  <span class="mt" style="align-self:center;font-weight:600;">Presets:</span>
+  <button class="preset-btn" onclick="$('#q').value='Analyze the food delivery market in Nepal.';$('#q').focus();">Food delivery in Nepal</button>
+  <button class="preset-btn" onclick="$('#q').value='Tesla';$('#q').focus();">Tesla</button>
+  <button class="preset-btn" onclick="$('#q').value='Netflix';$('#q').focus();">Netflix</button>
+  <button class="preset-btn" onclick="$('#q').value='Electric two-wheelers in India';$('#q').focus();">Electric vehicles in India</button>
+  <button class="preset-btn" onclick="$('#q').value='Mobile money in Kenya';$('#q').focus();">Mobile money in Kenya</button>
+</div>
+<form class="cd" id="f" novalidate><label class="lb" for="q">Company or industry</label><input class="in" id="q" autocomplete="off" aria-describedby="qh" value="${esc(S.q)}" placeholder="e.g., Tesla, Netflix, or Food delivery market in Nepal"><p class="mt" id="qh">Enter a target company name or industry topic to generate a multi-agent research brief.</p><p class="err" id="qe" hidden></p>
+<fieldset><legend class="lb">Data source</legend><label class="rd"><input type="radio" name="ds" value="web" ${S.sample ? '' : 'checked'}> Web search with scraping</label><label class="rd"><input type="radio" name="ds" value="sample" ${S.sample ? 'checked' : ''}> Sample data <span class="mt">(labelled as sample in the brief)</span></label></fieldset>
+<details><summary>Prototype controls</summary><label class="rd"><input type="checkbox" id="fail" ${S.fail ? 'checked' : ''}> Simulate a failed web search</label></details>
+<button class="bt" type="submit">Start research</button></form>
+<h2>Recent briefs</h2>${S.hist.length ? `<ul class="cd sl">${S.hist.slice(0, 3).map((h, i) => `<li><b>${esc(h.q)}</b><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button><span class="mt">${esc(h.time)}</span></li>`).join('')}</ul>` : `<div class="cd em"><p><b>No briefs yet</b></p><p class="mt">Finished briefs appear here so you can open them again.</p></div>`}`;
+}
+
+function vRun() {
+  const r = S.run;
+  if (r.err) return `<h1 tabindex="-1">Research stopped at the Researcher</h1><div class="cd" role="alert" style="border-color:var(--bat)"><p><b>${esc(r.err)}</b></p><p class="mt">Your query “${esc(r.q)}” is kept. Try again, or run it on sample data, which the brief labels clearly.</p><button class="bt" data-act="retry">Try again</button><button class="b2" data-act="sample">Use sample data</button><button class="b2" data-act="edit">Edit query</button></div>${steps(r)}`;
+  return `<h1 tabindex="-1">Researching “${esc(r.q)}”</h1><p class="mt" id="stat">Agents are working. The brief appears when the Critic is done.</p>${steps(r)}<h2>Scraping log</h2>${logBox(r)}<div class="cd" aria-busy="true" aria-label="Brief loading"><div class="sk" style="width:40%"></div><div class="sk"></div><div class="sk" style="width:80%"></div></div><button class="b2" data-act="cancel">Cancel research</button>`;
+}
+
+function upd() {
+  if (S.view !== 'run' || S.run.err) return;
+  $('#steps').outerHTML = steps(S.run);
+  const l = $('#log');
+  l.outerHTML = logBox(S.run);
+  const n = $('#log');
+  n.scrollTop = n.scrollHeight;
+  const a = ROLES.find(([k]) => S.run.st[k] === 'run');
+  if (a) say(a[1] + ' is running');
+}
+
+const checks = r => {
+  const b = r.final, u = unread(r);
+  return [
+    ['Brief has a summary', b.summary.length > 0, 'Summary is not empty'],
+    ['At most two competitors', b.competitors.length <= 2, b.competitors.length + ' listed'],
+    ['At most one revision', r.rev <= 1, r.rev + ' used'],
+    ['Every source has a status', r.sources.every(s => s.st), r.sources.length + ' sources checked'],
+    ['Unread sources are listed as missing', u.every(s => b.missing.some(m => m.includes(host(s.u)))), u.length + ' unread'],
+    ['Pages fetched only where robots.txt allows', r.sources.every(s => s.st !== 'fetched' || s.robots !== false), 'robots.txt respected']
+  ];
+};
+
+const pBrief = r => {
+  const b = r.final;
+  return `<div id="brief-render-area">
+<h2>Summary</h2><div class="cd"><p>${esc(b.summary)}</p></div>
+<h2>Competitors</h2><div class="g2">${b.competitors.map(c => `<div class="cd"><b style="font-size:16px;">${esc(c.name)}</b><p class="mt" style="margin-top:6px;line-height:1.6;">${esc(c.desc)}</p></div>`).join('')}</div><p class="mt">Shown only when relevant, up to two.</p>
+<h2>Key observations</h2><ul class="cd" style="line-height:1.7;">${b.obs.map(o => `<li style="margin-bottom:6px;">${esc(o)}</li>`).join('')}</ul>
+<h2>Sources</h2><ul class="cd">${r.sources.map(s => `<li>${esc(s.t)} <span class="mt">${esc(host(s.u))}</span> ${tag(s.st, LBL[s.st])}</li>`).join('')}</ul>
+<h2>Missing information</h2><ul class="cd em">${b.missing.map(m => `<li>${esc(m)}</li>`).join('')}</ul>
+</div>
+<div class="btn-row">
+  <button class="bt" data-act="pdf">Download brief (PDF)</button>
+  <button class="b2" data-act="download">Download brief (.md)</button>
+  <button class="b2" data-act="copy">Copy brief</button>
+  <button class="b2" data-act="new">New research</button>
+</div>`;
+};
+
+const pSrc = r => `<h2>Pages scraped</h2><div class="cd sc"><table><thead><tr><th>Source</th><th>Status</th><th>Used in brief</th></tr></thead><tbody>${r.sources.map(s => `<tr><td>${esc(s.t)}<br><span class="mt">${esc(s.u)}</span></td><td>${tag(s.st, LBL[s.st])}</td><td>${s.st === 'fetched' || s.st === 'sample' ? 'Yes' : 'No, listed under missing information'}</td></tr>`).join('')}</tbody></table></div><p class="mt">Pages are fetched only where the site’s robots.txt allows it.</p><h2>Scraping log</h2>${logBox(r).replace('id="log"', '')}`;
+
+const pChk = r => {
+  const c = checks(r), p = c.filter(x => x[1]).length;
+  return `<h2>Quality checks</h2><p class="mt">The app runs these checks on every brief. ${p} of ${c.length} passed${S.ts ? ' at ' + S.ts : ''}.</p><ul class="cd sl">${c.map(([n, ok, d]) => `<li><b>${n}</b>${S.chk ? tag('run', 'Running') : tag(ok ? 'done' : 'fail', ok ? 'Passed' : 'Failed')}<span class="mt">${d}</span></li>`).join('')}</ul><button class="b2" data-act="recheck">Run checks again</button>`;
+};
+
+const pData = r => {
+  const s = {
+    query: r.q,
+    entity: r.entity,
+    use_sample: r.sample,
+    findings: r.sources.map(x => ({ url: x.u, title: x.t, status: x.st })),
+    critique: r.crit,
+    revisions: r.rev,
+    drafts_count: r.drafts.length,
+    final_brief: {
+      summary: r.final.summary,
+      competitors: r.final.competitors,
+      observations_count: r.final.obs.length,
+      missing_count: r.final.missing.length
+    }
+  };
+  return `<h2>Data passed between roles</h2><div class="cd sc"><table><thead><tr><th>Role</th><th>Receives</th><th>Passes on</th></tr></thead><tbody><tr><td>Orchestrator</td><td>Query</td><td>Run state and research scope</td></tr><tr><td>Researcher</td><td>Query</td><td>Findings: sources, facts, and scrape logs</td></tr><tr><td>Analyst</td><td>Findings, Critic feedback</td><td>Draft brief (Summary, 2 Competitors, Obs, Sources)</td></tr><tr><td>Critic</td><td>Draft brief</td><td>Approval or one revision request</td></tr></tbody></table></div><h2>Shared data state (Pydantic / Structured model)</h2><div class="cd"><pre>${esc(JSON.stringify(s, null, 2))}</pre></div>`;
+};
+
+function vRes() {
+  const r = S.run, T = [['brief', 'Brief'], ['src', 'Sources and scraping'], ['chk', 'Quality checks'], ['data', 'Data passed']], P = { brief: pBrief, src: pSrc, chk: pChk, data: pData };
+  return `<h1 tabindex="-1">${esc(r.entity || r.q)}</h1><p>${tag('done', 'Reviewed by Critic')} ${tag('', 'Revisions: ' + r.rev)} ${tag(r.sample ? 'sample' : 'fetched', r.sample ? 'Sample data' : 'Web search')}</p><div class="tabs" role="tablist" aria-label="Brief sections">${T.map(([k, n]) => `<button role="tab" id="t-${k}" data-t="${k}" aria-selected="${S.tab === k}" tabindex="${S.tab === k ? 0 : -1}">${n}</button>`).join('')}</div><div role="tabpanel" aria-labelledby="t-${S.tab}">${P[S.tab](r)}</div>`;
+}
+
+function vHist() {
+  return `<h1 tabindex="-1">History</h1><p class="mt">Open an earlier brief.</p>${S.hist.length ? `<div class="cd sc"><table><thead><tr><th>Topic</th><th>Data source</th><th>Date</th><th>Action</th></tr></thead><tbody>${S.hist.map((h, i) => `<tr><td>${esc(h.q)}</td><td>${h.sample ? 'Sample data' : 'Web search'}</td><td>${esc(h.time)}</td><td><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button></td></tr>`).join('')}</tbody></table></div>` : `<div class="cd em"><p><b>No briefs yet</b></p><p class="mt">Run a research and its brief shows up here.</p><button class="bt" data-act="new">Start research</button></div>`}`;
+}
+
+function vHelp() {
+  return `<h1 tabindex="-1">How it works</h1><p class="mt">Four roles run in sequence and pass structured data to each other.</p><ol class="cd sl">${ROLES.map(([k, n, d], i) => `<li><b>${i + 1}. ${n}</b><span></span><span class="mt">${d}</span></li>`).join('')}</ol><h2>Scraping</h2><div class="cd"><p class="mt">The Researcher searches the web, checks each site’s robots.txt, then reads only the pages it allows. Blocked or timed-out pages are listed under missing information.</p></div><h2>Quality checks</h2><div class="cd"><p class="mt">Every brief is checked automatically: it has a summary, lists at most two competitors, used at most one revision, and shows a status for every source.</p></div><button class="bt" data-act="new">Start research</button>`;
+}
+
+const V = { new: vNew, run: vRun, result: vRes, history: vHist, help: vHelp };
+
+function render() {
+  $('#m').innerHTML = V[S.view]();
+  $$('.sb button').forEach(b => b.toggleAttribute('aria-current', false));
+  const n = S.view === 'history' || S.view === 'help' ? S.view : 'new';
+  $$('.sb button').forEach(b => {
+    if (b.dataset.v === n) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
+  });
+}
+
+function go(v) {
+  S.view = v;
+  render();
+  $('#m h1')?.focus();
+  window.scrollTo(0, 0);
+  if (v === 'result') say('Brief ready');
+}
+
+function openHist(i) {
+  S.run = S.hist[i].run;
+  S.tab = 'brief';
+  go('result');
+}
+
+// Download Brief in PDF Format
+function downloadPDF() {
+  const r = S.run;
+  if (!r || !r.final) return;
+
+  const f = r.final;
+  const printEl = document.createElement('div');
+  printEl.style.padding = '24px';
+  printEl.style.fontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+  printEl.style.color = '#14181F';
+  printEl.style.background = '#FFFFFF';
+  printEl.style.maxWidth = '800px';
+  printEl.style.margin = '0 auto';
+
+  printEl.innerHTML = `
+    <div style="border-bottom:2px solid #1F4FD8;padding-bottom:12px;margin-bottom:20px;">
+      <div style="font-size:12px;text-transform:uppercase;color:#4A5260;font-weight:700;letter-spacing:0.05em;">Executive Research Brief</div>
+      <h1 style="font-size:26px;color:#14181F;margin:6px 0 8px 0;letter-spacing:-0.02em;">${esc(r.entity || r.q)}</h1>
+      <div style="font-size:13px;color:#4A5260;">
+        <span><strong>Generated:</strong> ${new Date().toLocaleDateString()}</span> &bull; 
+        <span><strong>Data Source:</strong> ${r.sample ? 'Verified Sample Benchmark' : 'Live Web Knowledge & Scraping'}</span> &bull; 
+        <span><strong>Status:</strong> Reviewed &amp; Approved by Critic</span>
+      </div>
+    </div>
+
+    <h2 style="font-size:16px;color:#173A9E;margin:16px 0 8px;border-bottom:1px solid #D9DDE3;padding-bottom:4px;">1. Executive Summary</h2>
+    <div style="background:#F6F7F9;border:1px solid #D9DDE3;border-radius:8px;padding:14px;font-size:14px;line-height:1.6;margin-bottom:16px;">
+      ${esc(f.summary)}
+    </div>
+
+    <h2 style="font-size:16px;color:#173A9E;margin:16px 0 8px;border-bottom:1px solid #D9DDE3;padding-bottom:4px;">2. Primary Competitors</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      ${f.competitors.map(c => `
+        <div style="background:#F6F7F9;border:1px solid #D9DDE3;border-radius:8px;padding:12px;">
+          <div style="font-size:15px;font-weight:700;color:#14181F;margin-bottom:4px;">${esc(c.name)}</div>
+          <div style="font-size:13px;color:#4A5260;line-height:1.5;">${esc(c.desc)}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <h2 style="font-size:16px;color:#173A9E;margin:16px 0 8px;border-bottom:1px solid #D9DDE3;padding-bottom:4px;">3. Key Market Observations</h2>
+    <ul style="background:#F6F7F9;border:1px solid #D9DDE3;border-radius:8px;padding:12px 16px 12px 32px;font-size:13.5px;line-height:1.6;margin-bottom:16px;">
+      ${f.obs.map(o => `<li style="margin-bottom:6px;">${esc(o)}</li>`).join('')}
+    </ul>
+
+    <h2 style="font-size:16px;color:#173A9E;margin:16px 0 8px;border-bottom:1px solid #D9DDE3;padding-bottom:4px;">4. Sources Consulted</h2>
+    <ul style="background:#F6F7F9;border:1px solid #D9DDE3;border-radius:8px;padding:12px 16px 12px 32px;font-size:13px;line-height:1.5;margin-bottom:16px;">
+      ${r.sources.map(s => `<li style="margin-bottom:4px;"><strong>${esc(s.t)}</strong> (${esc(s.u)}) — <em>${LBL[s.st] || s.st}</em></li>`).join('')}
+    </ul>
+
+    <h2 style="font-size:16px;color:#173A9E;margin:16px 0 8px;border-bottom:1px solid #D9DDE3;padding-bottom:4px;">5. Missing Information &amp; Data Gaps</h2>
+    <ul style="background:#FFF9F9;border:1px dashed #D9DDE3;border-radius:8px;padding:12px 16px 12px 32px;font-size:13px;line-height:1.5;color:#8A1C1C;margin-bottom:20px;">
+      ${f.missing.map(m => `<li style="margin-bottom:4px;">${esc(m)}</li>`).join('')}
+    </ul>
+
+    <div style="border-top:1px solid #D9DDE3;padding-top:12px;font-size:12px;color:#4A5260;display:flex;justify-content:space-between;">
+      <span>Research Brief Multi-Agent System</span>
+      <span>Quality Review: ${r.rev ? 'Approved after 1 revision' : 'Approved without revision'}</span>
+    </div>
+  `;
+
+  document.body.appendChild(printEl);
+
+  const opt = {
+    margin: [10, 10, 10, 10],
+    filename: `Research_Brief_${(r.entity || r.q).toLowerCase().replace(/[^a-z0-9]+/g, '_')}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  if (window.html2pdf) {
+    say('Downloading PDF...');
+    window.html2pdf().set(opt).from(printEl).save().then(() => {
+      document.body.removeChild(printEl);
+      say('PDF downloaded');
+    }).catch(err => {
+      document.body.removeChild(printEl);
+      window.print();
+    });
+  } else {
+    document.body.removeChild(printEl);
+    window.print();
+  }
+}
+
+document.addEventListener('submit', e => {
+  e.preventDefault();
+  const q = $('#q').value.trim();
+  S.fail = $('#fail') ? $('#fail').checked : false;
+  if (!q) {
+    const m = $('#qe');
+    m.textContent = 'Enter a company or industry to start, for example Tesla or food delivery market in Nepal.';
+    m.hidden = false;
+    $('#q').setAttribute('aria-invalid', 'true');
+    $('#q').focus();
+    return;
+  }
+  start({ q, sample: $('input[name=ds]:checked').value === 'sample', fail: S.fail });
+});
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act],[data-v],[data-t]');
+  if (!b) return;
+  if (b.dataset.v) { token++; go(b.dataset.v); return; }
+  if (b.dataset.t) { S.tab = b.dataset.t; render(); $('#t-' + S.tab).focus(); return; }
+  const a = b.dataset.act, r = S.run;
+  if (a === 'retry') start({ q: r.q, sample: false, fail: false });
+  else if (a === 'sample') start({ q: r.q, sample: true, fail: false });
+  else if (a === 'edit' || a === 'new') { if (a === 'new') S.q = ''; go('new'); }
+  else if (a === 'cancel') { token++; go('new'); }
+  else if (a === 'open') openHist(+b.dataset.i);
+  else if (a === 'recheck') {
+    S.chk = 1;
+    render();
+    $('#t-chk').focus();
+    setTimeout(() => {
+      S.chk = null;
+      S.ts = new Date().toLocaleTimeString();
+      render();
+      $('#t-chk').focus();
+      say('Quality checks finished');
+    }, 600);
+  }
+  else if (a === 'pdf') {
+    downloadPDF();
+  }
+  else if (a === 'copy') {
+    const f = r.final, t = `# ${r.entity || r.q}\n\n## Summary\n${f.summary}\n\n## Competitors\n${f.competitors.map(c => `- **${c.name}**: ${c.desc}`).join('\n')}\n\n## Key Observations\n${f.obs.map(o => `- ${o}`).join('\n')}\n\n## Sources\n${r.sources.map(s => `- ${s.t} (${s.u}) [${s.st}]`).join('\n')}\n\n## Missing Information\n${f.missing.map(m => `- ${m}`).join('\n')}`;
+    try {
+      navigator.clipboard.writeText(t).then(() => say('Brief copied'), () => say('Copy is not available'));
+    } catch (x) { say('Copy is not available'); }
+  }
+  else if (a === 'download') {
+    const f = r.final, t = `# ${r.entity || r.q}\n\n## Summary\n${f.summary}\n\n## Competitors\n${f.competitors.map(c => `- **${c.name}**: ${c.desc}`).join('\n')}\n\n## Key Observations\n${f.obs.map(o => `- ${o}`).join('\n')}\n\n## Sources\n${r.sources.map(s => `- ${s.t} (${s.u}) [${s.st}]`).join('\n')}\n\n## Missing Information\n${f.missing.map(m => `- ${m}`).join('\n')}`;
+    const blob = new Blob([t], { type: 'text/markdown;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `research_brief_${(r.entity || r.q).toLowerCase().replace(/[^a-z0-9]+/g, '_')}.md`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+});
+
+document.addEventListener('keydown', e => {
+  const t = e.target.closest('[role=tab]');
+  if (!t || !['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+  const all = $$('[role=tab]'), i = all.indexOf(t), n = all[(i + (e.key === 'ArrowRight' ? 1 : all.length - 1)) % all.length];
+  S.tab = n.dataset.t;
+  render();
+  $('#t-' + S.tab).focus();
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# Virtual Environments
+venv/
+env/
+.venv/
+ENV/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Node dependencies & logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System & OS files
+.DS_Store
+Thumbs.db
+
+# Secrets & environment variables
+.env
+.env.local
