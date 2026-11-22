@@ -46,6 +46,11 @@ The sample covers the Nepal food delivery example; for any other topic in sample
 the app falls back to a live Wikipedia search automatically. Untick to always use live search.
 Run `python make_sample_output.py` to regenerate `sample_output.md` from the workflow.
 
+## Search history
+
+Each search is saved locally to `history.json` (not committed to git). Past queries are
+listed in the sidebar and can be cleared from there at any time.
+
 ## Tests
 
 ```bash
