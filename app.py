@@ -1,51 +1,34 @@
-"""
-Research Brief — Multi-Agent Market Research Web Application
-Workflow: 4 Sequential Roles (Orchestrator -> Researcher -> Analyst -> Critic [with revision loop])
-UI Design: Exact clean layout from prototype with real advanced research capabilities
-"""
-
-from pathlib import Path
 import streamlit as st
-import streamlit.components.v1 as components
+from workflow import run_workflow
 
-st.set_page_config(
-    page_title="Research Brief",
-    page_icon="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>R</text></svg>",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
+st.set_page_config(page_title="Research Brief", layout="wide")
+st.title("Multi-Agent Market Research Brief")
 
-# Hide Streamlit's default headers, footers and margins to display the full design system
-st.markdown("""
-<style>
-#MainMenu { visibility: hidden !important; display: none !important; }
-footer { visibility: hidden !important; display: none !important; }
-header { visibility: hidden !important; display: none !important; }
-.stDeployButton { display: none !important; }
-.main, .main .block-container, section.main, [data-testid="stAppViewBlockContainer"], [data-testid="stMainBlockContainer"], .block-container {
-    padding: 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-}
-[data-testid="stCustomComponentV1"], div[data-testid="stCustomComponentV1"] > iframe, .element-container {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-iframe {
-    width: 100% !important;
-    min-height: 100vh !important;
-    border: none !important;
-}
-</style>
-""", unsafe_allow_html=True)
+query = st.text_input("Company or industry",
+                      value="Analyze the food delivery market in Nepal.")
+use_sample = st.checkbox("Use clearly labelled sample data (no internet needed)", value=True)
 
-# Read the HTML application template
-html_path = Path(__file__).resolve().parent / "public" / "index.html"
-if html_path.exists():
-    with open(html_path, "r", encoding="utf-8") as f:
-        app_html = f.read()
-else:
-    app_html = "<h1>Error: HTML template not found</h1>"
+if st.button("Start research", type="primary") and query.strip():
+    with st.status("Running agents...", expanded=True) as status:
+        state = run_workflow(query, use_sample, on_step=lambda m: st.write(m))
+        status.update(label="Done", state="complete")
+    st.session_state["state"] = state
 
-components.html(app_html, height=1000, scrolling=True)
+state = st.session_state.get("state")
+if state:
+    f, d = state.findings, state.final
+    st.caption(f"Data source: {f.label} | Critic revisions used: {state.revisions_used} of 1")
+    st.header("Summary");            st.write(d.summary)
+    st.header("Competitors (up to 2)")
+    for c in d.competitors:
+        st.markdown(f"**{c.name}**: {c.description}")
+    if not d.competitors:
+        st.write("No competitors identified.")
+    st.header("Key observations")
+    for o in d.key_observations:
+        st.markdown(f"- {o}")
+    st.header("Sources and missing information")
+    for s in d.sources_and_missing:
+        st.markdown(f"- {s}")
+    with st.expander("Data passed between roles"):
+        st.json(state.model_dump())
