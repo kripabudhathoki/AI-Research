@@ -3,7 +3,7 @@
 **Query:** Analyze the food delivery market in Nepal.
 **Data source:** SAMPLE DATA - illustrative only, not verified or live
 **Critic revisions used:** 0 of 1
-**Date generated:** 2026-11-22
+**Date generated:** 2026-11-23
 
 ## Summary
 

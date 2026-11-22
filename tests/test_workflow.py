@@ -17,6 +17,11 @@ def test_critic_requests_revision_when_failed_source_is_missing():
     draft.sources_and_missing = []           # pretend the analyst forgot it
     assert run_critic(draft, findings).approved is False
 
+def test_sample_mode_falls_back_to_live_for_unknown_topic():
+    s = run_workflow("Analyze Tesla", use_sample=True)
+    assert s.findings.label.startswith("Live")
+    assert any("No sample data" in g for g in s.findings.gaps)
+
 def test_never_more_than_one_revision():
     s = run_workflow("Analyze Foo", use_sample=False)
     assert s.revisions_used <= 1
@@ -24,5 +29,6 @@ def test_never_more_than_one_revision():
 if __name__ == "__main__":
     test_sample_run_has_all_sections_and_max_two_competitors()
     test_critic_requests_revision_when_failed_source_is_missing()
+    test_sample_mode_falls_back_to_live_for_unknown_topic()
     test_never_more_than_one_revision()
     print("All tests passed")

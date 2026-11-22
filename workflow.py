@@ -65,7 +65,7 @@ class RunState(BaseModel):
 # ---------- Clearly labelled sample data (offline mode) ----------
 SAMPLE_LABEL = "SAMPLE DATA - illustrative only, not verified or live"
 
-def _sample_findings(topic: str) -> ResearchFindings:
+def _sample_findings(topic: str) -> Optional[ResearchFindings]:
     t = topic.lower()
     if "food" in t and "nepal" in t:
         return ResearchFindings(
@@ -84,12 +84,7 @@ def _sample_findings(topic: str) -> ResearchFindings:
                             note="Written by the app author as an example")],
             gaps=["No real market-size or market-share figures are included in the sample."],
         )
-    return ResearchFindings(
-        label=SAMPLE_LABEL,
-        facts=[f"No sample data exists for '{topic}'. Untick 'Use sample data' to search the web."],
-        sources=[Source(title="Built-in sample dataset", url="(none)", status="sample")],
-        gaps=["Sample mode only covers the Nepal food delivery example."],
-    )
+    return None   # no sample data for this topic
 
 
 # ---------- Roles ----------
@@ -109,21 +104,26 @@ def _get_json(url: str):
         return json.loads(resp.read().decode("utf-8"))
 
 
-def run_researcher(plan: OrchestratorPlan) -> ResearchFindings:
-    if plan.use_sample:
-        return _sample_findings(plan.topic)
-
-    facts, sources, gaps = [], [], []
+def _live_findings(plan: OrchestratorPlan, note: str = "") -> ResearchFindings:
+    facts, sources, gaps, seen = [], [], [], set()
+    terms = [plan.topic] + ([plan.query] if plan.query != plan.topic else [])
     try:
-        q = urllib.parse.quote(plan.topic)
-        hits = _get_json("https://en.wikipedia.org/w/api.php?action=query&list=search"
-                         f"&srsearch={q}&srlimit=3&format=json")["query"]["search"]
+        hits = []
+        for term in terms:                      # try the cleaned topic, then the raw query
+            q = urllib.parse.quote(term)
+            hits = _get_json("https://en.wikipedia.org/w/api.php?action=query&list=search"
+                             f"&srsearch={q}&srlimit=3&format=json")["query"]["search"]
+            if hits:
+                break
         for hit in hits:
             title = hit["title"]
-            url = "https://en.wikipedia.org/wiki/" + urllib.parse.quote(title.replace(" ", "_"))
+            if title in seen:
+                continue
+            seen.add(title)
+            slug = urllib.parse.quote(title.replace(" ", "_"))
+            url = "https://en.wikipedia.org/wiki/" + slug
             try:
-                summ = _get_json("https://en.wikipedia.org/api/rest_v1/page/summary/"
-                                 + urllib.parse.quote(title.replace(" ", "_")))
+                summ = _get_json("https://en.wikipedia.org/api/rest_v1/page/summary/" + slug)
                 if summ.get("extract"):
                     facts.append(summ["extract"])
                     sources.append(Source(title=title, url=url, status="fetched"))
@@ -136,10 +136,21 @@ def run_researcher(plan: OrchestratorPlan) -> ResearchFindings:
     except Exception as e:
         sources.append(Source(title="Wikipedia search", url="https://en.wikipedia.org",
                               status="failed", note=str(e)[:80]))
+    if note:
+        gaps.append(note)
     gaps.append("Competitors, market size and market share were not found automatically; "
                 "check company reports or news before relying on this brief.")
     return ResearchFindings(label="Live web search (Wikipedia)", facts=facts,
                             sources=sources, gaps=gaps)
+
+
+def run_researcher(plan: OrchestratorPlan) -> ResearchFindings:
+    if plan.use_sample:
+        sample = _sample_findings(plan.topic)
+        if sample:
+            return sample
+        return _live_findings(plan, "No sample data exists for this topic, so live search was used instead.")
+    return _live_findings(plan)
 
 
 def run_analyst(plan: OrchestratorPlan, findings: ResearchFindings,

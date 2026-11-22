@@ -42,8 +42,9 @@ Open **http://localhost:8501** in your browser.
 ## Sample data vs live search
 
 Tick **"Use clearly labelled sample data"** (default) to run offline.
-The sample covers the Nepal food delivery example. Untick to run a live
-Wikipedia search for any query; results depend on what Wikipedia contains.
+The sample covers the Nepal food delivery example; for any other topic in sample mode
+the app falls back to a live Wikipedia search automatically. Untick to always use live search.
+Run `python make_sample_output.py` to regenerate `sample_output.md` from the workflow.
 
 ## Tests
 
