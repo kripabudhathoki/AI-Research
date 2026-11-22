@@ -23,6 +23,12 @@ MODES = {"Auto (directory, then live web)": "auto", "Sample directory only": "sa
 st.markdown("""
 <style>
 .block-container {padding-top: 1.5rem; max-width: 1100px;}
+#MainMenu, footer {visibility: hidden;}
+header[data-testid="stHeader"] {background: transparent;}
+[data-testid="stToolbar"], [data-testid="stAppDeployButton"] {display: none !important;}
+div[data-baseweb="input"] {border-radius: 12px !important;}
+div[data-baseweb="input"] input {font-size: 1rem; padding: 0.6rem 0.8rem;}
+.stButton > button {border-radius: 12px !important; font-weight: 600;}
 .hero {background: linear-gradient(135deg,#4f46e5 0%,#7c3aed 55%,#db2777 100%); color:#fff;
        border-radius:20px; padding:34px 36px; margin-bottom:18px;}
 .hero h1 {margin:0 0 6px 0; font-size:2.1rem; color:#fff;}
@@ -84,10 +90,14 @@ for key, default in {"query": "", "result": None, "pending": False}.items():
 
 # ------------------------------------------------------------------ search area
 hero_slot = st.container()
-st.text_input("Company or industry", key="query", label_visibility="collapsed",
-              placeholder="Type a company or industry, e.g. Foodmandu, Nepal Telecom, banking in Nepal")
+c_in, c_btn = st.columns([5, 1.3])
+with c_in:
+    st.text_input("Company or industry", key="query", label_visibility="collapsed",
+                  placeholder="Type a company or industry, e.g. Foodmandu, Nepal Telecom, banking in Nepal")
+with c_btn:
+    clicked = st.button("Start research", type="primary", use_container_width=True)
+
 mode_label = st.radio("Search mode", list(MODES), horizontal=True, label_visibility="collapsed")
-clicked = st.button("Start research", type="primary")
 st.caption("Try an example:")
 for col, ex in zip(st.columns(len(EXAMPLES)), EXAMPLES):
     col.button(ex, key=f"ex_{ex}", on_click=set_query, args=(ex,), use_container_width=True)
@@ -161,7 +171,8 @@ def render(state):
             st.markdown(f'<div class="summary">{esc(b.summary)}</div>', unsafe_allow_html=True)
             st.markdown("#### Competitors (up to 2)")
             if b.competitors:
-                for col, c in zip(st.columns(len(b.competitors)), b.competitors):
+                cols = st.columns(2) if len(b.competitors) < 2 else st.columns(len(b.competitors))
+                for col, c in zip(cols, b.competitors):
                     col.markdown(f'<div class="card comp"><div class="avatar">{esc(c[:2].upper())}</div>'
                                  f"<b>{esc(c)}</b></div>", unsafe_allow_html=True)
             else:
