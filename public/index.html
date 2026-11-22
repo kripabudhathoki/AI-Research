@@ -15,7 +15,7 @@ body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif
 .sb button{all:unset;box-sizing:border-box;padding:12px;border-radius:8px;font-size:14px;cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--tx)}
 .sb button[aria-current=page]{background:var(--acs);color:var(--ac);font-weight:600}.sb button:hover{background:var(--acs)}
 .note{margin-top:auto;padding:12px;font-size:12px;color:var(--mt)}
-.mn{flex:1;min-width:0;padding:40px;max-width:940px}
+.mn{flex:1;min-width:0;padding:40px 24px;max-width:880px;margin:0 auto;width:100%}
 h1{font-size:32px;letter-spacing:-.02em;margin:0 0 8px;outline:0}h2{font-size:18px;margin:28px 0 10px}p{margin:0 0 8px}.mt{color:var(--mt);font-size:14px}
 .cd{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:20px;margin:12px 0;box-shadow:0 1px 2px rgba(20,24,31,.06),0 6px 20px rgba(20,24,31,.05)}
 ul.cd,ol.cd{padding-left:40px}ul.cd.sl,ol.cd.sl{list-style:none;padding:8px 20px}.em{border-style:dashed}
@@ -31,19 +31,19 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{o
 .tg{font-style:normal;font-size:13px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--nb);color:var(--nt);white-space:nowrap;align-self:start}
 .ok{background:var(--okb);color:var(--okt)}.bad{background:var(--bab);color:var(--bat)}.info,.run{background:var(--inb);color:var(--int)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g2 .cd{margin:0}
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--bd);margin:16px 0;overflow-x:auto}
-.tabs button{all:unset;box-sizing:border-box;padding:12px 16px;cursor:pointer;font-weight:600;color:var(--mt);border-bottom:3px solid transparent;min-height:44px;white-space:nowrap}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--bd);margin:20px 0;overflow-x:auto;justify-content:center}
+.tabs button{all:unset;box-sizing:border-box;padding:12px 18px;cursor:pointer;font-weight:600;color:var(--mt);border-bottom:3px solid transparent;min-height:44px;white-space:nowrap}
 .tabs button[aria-selected=true]{color:var(--ac);border-color:var(--pb)}
 .lg{font:13px/1.7 ui-monospace,Menlo,Consolas,monospace;list-style:none;max-height:220px;overflow:auto}.lg li{padding:0}
 .sk{height:12px;background:var(--nb);border-radius:6px;margin:10px 0}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--bd);vertical-align:top}
 .sc{overflow-x:auto}pre{margin:0;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto}
 .sr{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.presets{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
-.preset-btn{background:var(--sf);border:1px solid var(--bd);color:var(--tx);font-size:13px;padding:6px 12px;border-radius:6px;cursor:pointer}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 20px;justify-content:center;align-items:center}
+.preset-btn{background:var(--sf);border:1px solid var(--bd);color:var(--tx);font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer}
 .preset-btn:hover{background:var(--acs);border-color:var(--ac);color:var(--ac)}
-.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.hero{background:linear-gradient(135deg,var(--acs),var(--sf));border:1px solid var(--bd);border-radius:16px;padding:28px 32px;margin-bottom:8px}.hero h1{margin-bottom:6px}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;justify-content:center}
+.hero{background:linear-gradient(135deg,var(--acs),var(--sf));border:1px solid var(--bd);border-radius:16px;padding:36px 32px;margin-bottom:12px;text-align:center}.hero h1{margin-bottom:8px}.hero p{max-width:620px;margin:0 auto}
 .pipe{list-style:none;margin:16px 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:s}
 .pipe li{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
 .pipe li::before{counter-increment:s;content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--nb);color:var(--nt);display:grid;place-items:center;font-weight:700;font-size:13px}
@@ -442,14 +442,15 @@ function vNew() {
 <form class="cd" id="f" novalidate><label class="lb" for="q">Company or industry</label><input class="in" id="q" autocomplete="off" aria-describedby="qh" value="${esc(S.q)}" placeholder="e.g., Tesla, Netflix, or Food delivery market in Nepal"><p class="mt" id="qh">Enter a target company name or industry topic to generate a multi-agent research brief.</p><p class="err" id="qe" hidden></p>
 <fieldset><legend class="lb">Data source</legend><label class="rd"><input type="radio" name="ds" value="web" ${S.sample ? '' : 'checked'}> Web search with scraping</label><label class="rd"><input type="radio" name="ds" value="sample" ${S.sample ? 'checked' : ''}> Sample data <span class="mt">(labelled as sample in the brief)</span></label></fieldset>
 <details><summary>Prototype controls</summary><label class="rd"><input type="checkbox" id="fail" ${S.fail ? 'checked' : ''}> Simulate a failed web search</label></details>
-<button class="bt" type="submit">Start research</button></form><h2>What happens next</h2><ol class="pipe">${ROLES.map(([k,n,d])=>`<li><b>${n}</b><span class="mt">${d}</span></li>`).join('')}</ol>
-<h2>Recent briefs</h2>${S.hist.length ? `<ul class="cd sl">${S.hist.slice(0, 3).map((h, i) => `<li><b>${esc(h.q)}</b><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button><span class="mt">${esc(h.time)}</span></li>`).join('')}</ul>` : `<div class="cd em"><p><b>No briefs yet</b></p><p class="mt">Finished briefs appear here so you can open them again.</p></div>`}`;
+<div style="display:flex;justify-content:center;margin-top:16px;"><button class="bt" type="submit" style="min-width:200px;padding:12px 28px;">Start research</button></div></form>
+<h2 style="text-align:center;">What happens next</h2><ol class="pipe">${ROLES.map(([k,n,d])=>`<li><b>${n}</b><span class="mt">${d}</span></li>`).join('')}</ol>
+<h2 style="text-align:center;">Recent briefs</h2>${S.hist.length ? `<ul class="cd sl">${S.hist.slice(0, 3).map((h, i) => `<li><b>${esc(h.q)}</b><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button><span class="mt">${esc(h.time)}</span></li>`).join('')}</ul>` : `<div class="cd em" style="text-align:center;"><p><b>No briefs yet</b></p><p class="mt">Finished briefs appear here so you can open them again.</p></div>`}`;
 }
 
 function vRun() {
   const r = S.run;
-  if (r.err) return `<h1 tabindex="-1">Research stopped at the Researcher</h1><div class="cd" role="alert" style="border-color:var(--bat)"><p><b>${esc(r.err)}</b></p><p class="mt">Your query “${esc(r.q)}” is kept. Try again, or run it on sample data, which the brief labels clearly.</p><button class="bt" data-act="retry">Try again</button><button class="b2" data-act="sample">Use sample data</button><button class="b2" data-act="edit">Edit query</button></div>${steps(r)}`;
-  return `<h1 tabindex="-1">Researching “${esc(r.q)}”</h1><p class="mt" id="stat">Agents are working. The brief appears when the Critic is done.</p><div class="bar" aria-hidden="true"><i id="pb" style="width:${Object.values(r.st).reduce((a,v)=>a+(v==='done'?25:v==='run'?12:0),0)}%"></i></div>${steps(r)}<h2>Scraping log</h2>${logBox(r)}<div class="cd" aria-busy="true" aria-label="Brief loading"><div class="sk" style="width:40%"></div><div class="sk"></div><div class="sk" style="width:80%"></div></div><button class="b2" data-act="cancel">Cancel research</button>`;
+  if (r.err) return `<div style="text-align:center;"><h1 tabindex="-1">Research stopped at the Researcher</h1></div><div class="cd" role="alert" style="border-color:var(--bat)"><p><b>${esc(r.err)}</b></p><p class="mt">Your query “${esc(r.q)}” is kept. Try again, or run it on sample data, which the brief labels clearly.</p><div style="display:flex;gap:8px;margin-top:12px;"><button class="bt" data-act="retry">Try again</button><button class="b2" data-act="sample">Use sample data</button><button class="b2" data-act="edit">Edit query</button></div></div>${steps(r)}`;
+  return `<div style="text-align:center;margin-bottom:18px;"><h1 tabindex="-1">Researching “${esc(r.q)}”</h1><p class="mt" id="stat">Agents are working. The brief appears when the Critic is done.</p></div><div class="bar" aria-hidden="true"><i id="pb" style="width:${Object.values(r.st).reduce((a,v)=>a+(v==='done'?25:v==='run'?12:0),0)}%"></i></div>${steps(r)}<h2>Scraping log</h2>${logBox(r)}<div class="cd" aria-busy="true" aria-label="Brief loading"><div class="sk" style="width:40%"></div><div class="sk"></div><div class="sk" style="width:80%"></div></div><div style="text-align:center;margin-top:16px;"><button class="b2" data-act="cancel">Cancel research</button></div>`;
 }
 
 function upd() {
@@ -535,15 +536,15 @@ const pData = r => {
 
 function vRes() {
   const r = S.run, T = [['brief', 'Brief'], ['src', 'Sources and scraping'], ['chk', 'Quality checks'], ['data', 'Data passed']], P = { brief: pBrief, src: pSrc, chk: pChk, data: pData };
-  return `<h1 tabindex="-1">${esc(r.entity || r.q)}</h1><p>${tag('done', 'Reviewed by Critic')} ${tag('', 'Revisions: ' + r.rev)} ${tag(r.sample ? 'sample' : 'fetched', r.sample ? 'Sample data' : 'Web search')}</p><div class="kpi"><div class="cd"><b>${r.sources.filter(s=>s.st==='fetched'||s.st==='sample').length} of ${r.sources.length}</b><span class="mt">sources read</span></div><div class="cd"><b>${r.rev}</b><span class="mt">${r.rev===1?'revision':'revisions'} requested</span></div><div class="cd"><b>${checks(r).filter(x=>x[1]).length} of ${checks(r).length}</b><span class="mt">quality checks passed</span></div></div><div class="tabs" role="tablist" aria-label="Brief sections">${T.map(([k, n]) => `<button role="tab" id="t-${k}" data-t="${k}" aria-selected="${S.tab === k}" tabindex="${S.tab === k ? 0 : -1}">${n}</button>`).join('')}</div><div role="tabpanel" aria-labelledby="t-${S.tab}">${P[S.tab](r)}</div>`;
+  return `<div style="text-align:center;margin-bottom:16px;"><h1 tabindex="-1">${esc(r.entity || r.q)}</h1><div style="display:flex;justify-content:center;gap:8px;margin-top:8px;">${tag('done', 'Reviewed by Critic')} ${tag('', 'Revisions: ' + r.rev)} ${tag(r.sample ? 'sample' : 'fetched', r.sample ? 'Sample data' : 'Web search')}</div></div><div class="kpi"><div class="cd"><b>${r.sources.filter(s=>s.st==='fetched'||s.st==='sample').length} of ${r.sources.length}</b><span class="mt">sources read</span></div><div class="cd"><b>${r.rev}</b><span class="mt">${r.rev===1?'revision':'revisions'} requested</span></div><div class="cd"><b>${checks(r).filter(x=>x[1]).length} of ${checks(r).length}</b><span class="mt">quality checks passed</span></div></div><div class="tabs" role="tablist" aria-label="Brief sections">${T.map(([k, n]) => `<button role="tab" id="t-${k}" data-t="${k}" aria-selected="${S.tab === k}" tabindex="${S.tab === k ? 0 : -1}">${n}</button>`).join('')}</div><div role="tabpanel" aria-labelledby="t-${S.tab}">${P[S.tab](r)}</div>`;
 }
 
 function vHist() {
-  return `<h1 tabindex="-1">History</h1><p class="mt">Open an earlier brief.</p>${S.hist.length ? `<div class="cd sc"><table><thead><tr><th>Topic</th><th>Data source</th><th>Date</th><th>Action</th></tr></thead><tbody>${S.hist.map((h, i) => `<tr><td>${esc(h.q)}</td><td>${h.sample ? 'Sample data' : 'Web search'}</td><td>${esc(h.time)}</td><td><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button></td></tr>`).join('')}</tbody></table></div>` : `<div class="cd em"><p><b>No briefs yet</b></p><p class="mt">Run a research and its brief shows up here.</p><button class="bt" data-act="new">Start research</button></div>`}`;
+  return `<div style="text-align:center;margin-bottom:20px;"><h1 tabindex="-1">History</h1><p class="mt">Open an earlier brief.</p></div>${S.hist.length ? `<div class="cd sc"><table><thead><tr><th>Topic</th><th>Data source</th><th>Date</th><th>Action</th></tr></thead><tbody>${S.hist.map((h, i) => `<tr><td>${esc(h.q)}</td><td>${h.sample ? 'Sample data' : 'Web search'}</td><td>${esc(h.time)}</td><td><button class="b2" data-act="open" data-i="${i}" aria-label="Open brief ${esc(h.q)}">Open brief</button></td></tr>`).join('')}</tbody></table></div>` : `<div class="cd em" style="text-align:center;"><p><b>No briefs yet</b></p><p class="mt">Run a research and its brief shows up here.</p><div style="margin-top:16px;"><button class="bt" data-act="new">Start research</button></div></div>`}`;
 }
 
 function vHelp() {
-  return `<h1 tabindex="-1">How it works</h1><p class="mt">Four roles run in sequence and pass structured data to each other.</p><ol class="cd sl">${ROLES.map(([k, n, d], i) => `<li><b>${i + 1}. ${n}</b><span></span><span class="mt">${d}</span></li>`).join('')}</ol><h2>Scraping</h2><div class="cd"><p class="mt">The Researcher searches the web, checks each site’s robots.txt, then reads only the pages it allows. Blocked or timed-out pages are listed under missing information.</p></div><h2>Quality checks</h2><div class="cd"><p class="mt">Every brief is checked automatically: it has a summary, lists at most two competitors, used at most one revision, and shows a status for every source.</p></div><button class="bt" data-act="new">Start research</button>`;
+  return `<div style="text-align:center;margin-bottom:24px;"><h1 tabindex="-1">How it works</h1><p class="mt">Four roles run in sequence and pass structured data to each other.</p></div><ol class="cd sl">${ROLES.map(([k, n, d], i) => `<li><b>${i + 1}. ${n}</b><span></span><span class="mt">${d}</span></li>`).join('')}</ol><h2 style="text-align:center;">Scraping</h2><div class="cd"><p class="mt">The Researcher searches the web, checks each site’s robots.txt, then reads only the pages it allows. Blocked or timed-out pages are listed under missing information.</p></div><h2 style="text-align:center;">Quality checks</h2><div class="cd"><p class="mt">Every brief is checked automatically: it has a summary, lists at most two competitors, used at most one revision, and shows a status for every source.</p></div><div style="text-align:center;margin-top:24px;"><button class="bt" data-act="new">Start research</button></div>`;
 }
 
 const V = { new: vNew, run: vRun, result: vRes, history: vHist, help: vHelp };
